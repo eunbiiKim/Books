@@ -10,12 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow()
         
         let tabBarController = TabBarController()
-        
-        tabBarController.viewControllers = [
-            tabBarController.showNewBooksViewController,
-            tabBarController.searchBooksViewController
-        ]
-    
+
         self.window?.rootViewController = tabBarController
         
         self.window?.makeKeyAndVisible()
