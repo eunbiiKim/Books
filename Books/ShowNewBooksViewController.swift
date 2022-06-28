@@ -6,7 +6,7 @@ class ShowNewBooksViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        self.view.backgroundColor = .brown
+        self.view.backgroundColor = .white
     }
 }
 
