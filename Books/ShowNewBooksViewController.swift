@@ -6,7 +6,10 @@ class ShowNewBooksViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.title = "New"
+        print("ShowNewBooksViewController")
     }
 }
 

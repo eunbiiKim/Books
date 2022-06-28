@@ -9,8 +9,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow()
         
-        self.window?.rootViewController = ShowNewBooksViewController()
+        let tabBarController = TabBarController()
+        
+        tabBarController.viewControllers = [
+            tabBarController.showNewBooksViewController,
+            tabBarController.searchBooksViewController
+        ]
     
+        self.window?.rootViewController = tabBarController
+        
         self.window?.makeKeyAndVisible()
         
         return true
