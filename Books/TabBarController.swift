@@ -2,17 +2,35 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
-    let showNewBooksViewController = ShowNewBooksViewController()
+    let firstTabViewController = ShowNewBooksViewController()
     
-    let searchBooksViewController = SearchBooksViewController()
+    let secondTabViewController = SearchBooksViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let viewControllers = [self.showNewBooksViewController, self.searchBooksViewController]
+        self.configureContentViewControllers()
+        
+        self.configureTabBar()
+        
+        self.configureTabBarItem()
+    }
+    
+    func configureContentViewControllers() {
+        let viewControllers = [self.firstTabViewController, self.secondTabViewController]
         
         self.viewControllers = viewControllers
         
+        self.selectedIndex = 0
+    }
+    
+    func configureTabBar() {
         self.tabBar.backgroundColor = .systemGroupedBackground
+    }
+    
+    func configureTabBarItem() {
+        self.firstTabViewController.tabBarItem = UITabBarItem(title: "New", image: UIImage(systemName: "book"), tag: 0)
+        
+        self.secondTabViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
     }
 }
