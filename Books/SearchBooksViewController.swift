@@ -1,10 +1,7 @@
 import UIKit
 
 class SearchBooksViewController: UIViewController {
-    override func loadView() {
-        self.view = UIView()
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
