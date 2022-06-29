@@ -1,6 +1,6 @@
 import UIKit
 
-class DetailBookView: UIView {
+class NewBookView: UIView {
     let topView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -83,7 +83,7 @@ class DetailBookView: UIView {
     }
 }
 
-extension DetailBookView {
+extension NewBookView {
     func setupLayout() {
         self.backgroundColor = .white
         

@@ -1,15 +1,14 @@
 import UIKit
 
-class ShowNewBooksViewController: UIViewController {
-    
+class SearchBooksViewController: UIViewController {
+
     let tableView: UITableView = {
         let tableView = UITableView()
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        tableView.separatorStyle = .none
 
-        tableView.register(DetailBookTableViewCell.self, forCellReuseIdentifier: DetailBookTableViewCell.identifier)
+        tableView.register(NewBookTableViewCell.self, forCellReuseIdentifier: NewBookTableViewCell.identifier)
+        tableView.register(SearchBookTableViewCell.self, forCellReuseIdentifier: SearchBookTableViewCell.identifier)
         
         return tableView
     }()
@@ -19,12 +18,16 @@ class ShowNewBooksViewController: UIViewController {
         
         self.view.backgroundColor = .white
         
-        self.navigationItem.title = "New Books"
+        self.navigationItem.title = "Search Books"
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        self.navigationController?.navigationBar.topItem?.largeTitleDisplayMode = .automatic
-
+        self.navigationItem.largeTitleDisplayMode = .automatic
+        
+        self.navigationItem.searchController = UISearchController(searchResultsController: nil)
+        
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        
         self.navigationController?.navigationBar.backgroundColor = .white
         
         self.navigationController?.navigationBar.barTintColor = .white
@@ -39,17 +42,20 @@ class ShowNewBooksViewController: UIViewController {
     }
 }
 
-extension ShowNewBooksViewController: UITableViewDelegate {
+extension SearchBooksViewController: UITableViewDelegate {
 }
 
-extension ShowNewBooksViewController: UITableViewDataSource {
+extension SearchBooksViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: DetailBookTableViewCell.identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchBookTableViewCell.identifier, for: indexPath)
         return cell
     }
+
 }
+
 
