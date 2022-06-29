@@ -21,6 +21,10 @@ class ShowNewBooksViewController: UIViewController {
         
         self.navigationItem.title = "New Books"
         
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        self.navigationController?.navigationBar.topItem?.largeTitleDisplayMode = .automatic
+
         self.navigationController?.navigationBar.backgroundColor = .white
         
         self.navigationController?.navigationBar.barTintColor = .white

@@ -17,23 +17,9 @@ class TabBarController: UITabBarController {
     }
     
     func configureContentViewControllers() {
-        
-        // FIXME: - navigation 인스턴스들을 어디서 생성할지
-        /// new books
         let showNewBooksNavigationController = UINavigationController(rootViewController: self.firstTabViewController)
         
-        showNewBooksNavigationController.navigationBar.prefersLargeTitles = true
-        showNewBooksNavigationController.navigationBar.topItem?.title = "NewBooks"
-        showNewBooksNavigationController.navigationBar.topItem?.largeTitleDisplayMode = .automatic
-        
-        showNewBooksNavigationController.navigationBar.backgroundColor = .white
-        
-        /// search books
         let searchBooksNavigationController = UINavigationController(rootViewController: self.secondTabViewController)
-        
-        searchBooksNavigationController.navigationBar.prefersLargeTitles = true
-        searchBooksNavigationController.navigationBar.topItem?.title = "Search Books"
-        searchBooksNavigationController.navigationBar.topItem?.largeTitleDisplayMode = .automatic
         
         let viewControllers = [showNewBooksNavigationController as UIViewController, searchBooksNavigationController as UIViewController]
         
@@ -44,6 +30,7 @@ class TabBarController: UITabBarController {
     
     func configureTabBar() {
         self.tabBar.backgroundColor = .systemGroupedBackground
+        self.tabBar.isTranslucent = true
     }
     
     func configureTabBarItem() {
