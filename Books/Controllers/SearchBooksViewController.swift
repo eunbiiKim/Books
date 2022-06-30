@@ -8,6 +8,7 @@ class SearchBooksViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
         tableView.register(NewBookTableViewCell.self, forCellReuseIdentifier: NewBookTableViewCell.identifier)
+        
         tableView.register(SearchBookTableViewCell.self, forCellReuseIdentifier: SearchBookTableViewCell.identifier)
         
         return tableView
@@ -48,6 +49,7 @@ extension SearchBooksViewController: UITableViewDelegate {
 extension SearchBooksViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // FIXME: - 데이터주고받을때 completion 수정하기
         return 10
     }
     

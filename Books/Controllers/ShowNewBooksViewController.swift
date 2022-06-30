@@ -42,12 +42,15 @@ class ShowNewBooksViewController: UIViewController {
 extension ShowNewBooksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let showDetailBookViewController = ShowDetailBookViewController()
+        
+        // FIXME: - 데이터주고받을때 completion 수정하기
         self.present(showDetailBookViewController, animated: true, completion: nil)
     }
 }
 
 extension ShowNewBooksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // FIXME: - 데이터주고받을때 수정하기
         return 3
     }
     

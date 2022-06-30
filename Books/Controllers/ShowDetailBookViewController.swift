@@ -8,16 +8,25 @@ class ShowDetailBookViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         label.textColor = .black
         label.numberOfLines = 0
+        
+        // FIXME: - 데이터주고받을때 completion 수정하기
         label.text = "Microsoft Office Inside Out"
+        
         return label
     }()
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = .systemGray5
-//        scrollView.showsVerticalScrollIndicator = true
+        scrollView.backgroundColor = .white
         return scrollView
+    }()
+    
+    let detailBookView: DetailBookView = {
+        let view = DetailBookView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
     }()
     
     override func viewDidLoad() {
@@ -29,24 +38,9 @@ class ShowDetailBookViewController: UIViewController {
         
         self.view.addSubview(self.scrollView)
         
+        self.scrollView.addSubview(self.detailBookView)
+        
         self.setupViewsLayout()
-        
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .cyan
-        
-        self.scrollView.addSubview(view)
-        
-        self.scrollView.addConstraints([
-            view.topAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.topAnchor),
-            view.leadingAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.trailingAnchor),
-            view.widthAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.widthAnchor),
-            view.heightAnchor.constraint(equalToConstant: 2000)
-        ])
-        
-        self.scrollView.contentSize = CGSize(width: 300, height: 3000)
-        
     }
     
     func setupViewsLayout() {
@@ -58,6 +52,18 @@ class ShowDetailBookViewController: UIViewController {
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -20),
+        ])
+        
+        let contentViewCenterY = self.detailBookView.centerYAnchor.constraint(equalTo: self.scrollView.centerYAnchor)
+        contentViewCenterY.priority = .defaultLow
+        
+        self.scrollView.addConstraints([
+            self.detailBookView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
+            self.detailBookView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
+            self.detailBookView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
+            self.detailBookView.bottomAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.bottomAnchor),
+            self.detailBookView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            contentViewCenterY,
         ])
     }
 }
