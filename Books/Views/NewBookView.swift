@@ -1,30 +1,28 @@
 import UIKit
 
+import SnapKit
+
 class NewBookView: UIView {
     let topView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray6
         return view
     }()
     
     let bottomView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray5
         return view
     }()
     
     let topImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .white
         return imageView
     }()
     
     let bottomStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
@@ -34,7 +32,6 @@ class NewBookView: UIView {
     
     let bottomLabel1: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -44,7 +41,6 @@ class NewBookView: UIView {
     
     let bottomLabel2: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -54,7 +50,6 @@ class NewBookView: UIView {
     
     let bottomLabel3: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -64,7 +59,6 @@ class NewBookView: UIView {
     
     let bottomLabel4: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -92,38 +86,40 @@ extension NewBookView {
         
         self.addSubview(self.topView)
         self.addSubview(self.bottomView)
+        
         self.topView.addSubview(self.topImageView)
+        
         self.bottomView.addSubview(self.bottomStackView)
+        
         self.bottomStackView.addArrangedSubview(self.bottomLabel1)
         self.bottomStackView.addArrangedSubview(self.bottomLabel2)
         self.bottomStackView.addArrangedSubview(self.bottomLabel3)
         self.bottomStackView.addArrangedSubview(self.bottomLabel4)
         
-        self.addConstraints([
-            self.topView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.topView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.topView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.bottomView.topAnchor.constraint(equalTo: self.topView.bottomAnchor),
-            self.bottomView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.bottomView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.bottomView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-        ])
+        self.topView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+        }
         
-        self.topView.addConstraints([
-            self.topImageView.topAnchor.constraint(equalTo: self.topView.topAnchor, constant: 25),
-            self.topImageView.bottomAnchor.constraint(equalTo: self.topView.bottomAnchor, constant: -25),
+        self.bottomView.snp.makeConstraints {
+            $0.top.equalTo(self.topView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+    
+        self.topImageView.snp.makeConstraints {
+            $0.top.equalTo(self.topView).offset(25)
+            $0.bottom.equalTo(self.topView).offset(-25)
             // FIXME: - 데이터 받으면
-            self.topImageView.widthAnchor.constraint(equalToConstant: 100),
-            self.topImageView.heightAnchor.constraint(equalToConstant: 140),
+            $0.width.equalTo(100)
+            $0.height.equalTo(140)
             //
-            self.topImageView.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor)
-        ])
+            $0.centerX.equalTo(self.topView)
+        }
         
-        self.bottomView.addConstraints([
-            self.bottomStackView.topAnchor.constraint(equalTo: self.bottomView.topAnchor, constant: 15),
-            self.bottomStackView.leadingAnchor.constraint(equalTo: self.bottomView.leadingAnchor, constant: 20),
-            self.bottomStackView.trailingAnchor.constraint(equalTo: self.bottomView.trailingAnchor, constant: -20),
-            self.bottomStackView.bottomAnchor.constraint(equalTo: self.bottomView.bottomAnchor, constant: -15),
-        ])
+        self.bottomStackView.snp.makeConstraints {
+            $0.top.equalTo(self.bottomView).offset(15)
+            $0.leading.equalTo(self.bottomView).offset(20)
+            $0.trailing.equalTo(self.bottomView).offset(-20)
+            $0.bottom.equalTo(self.bottomView).offset(-15)
+        }
     }
 }

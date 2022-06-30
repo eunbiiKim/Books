@@ -1,11 +1,12 @@
 import UIKit
 
+import SnapKit
+
 class NewBookTableViewCell: UITableViewCell {
     static let identifier = "NewBookTableViewCell"
     
     let newBookView: NewBookView = {
         let view = NewBookView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -26,11 +27,11 @@ class NewBookTableViewCell: UITableViewCell {
 
 extension NewBookTableViewCell {
     func setupView() {
-        self.contentView.addConstraints([
-            self.newBookView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-            self.newBookView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
-            self.newBookView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20),
-            self.newBookView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
-        ])
+        self.newBookView.snp.makeConstraints {
+            $0.top.equalTo(super.contentView).offset(10)
+            $0.leading.equalTo(super.contentView).offset(20)
+            $0.trailing.equalTo(super.contentView).offset(-20)
+            $0.bottom.equalTo(super.contentView).offset(-10)
+        }
     }
 }

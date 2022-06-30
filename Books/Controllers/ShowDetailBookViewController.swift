@@ -1,30 +1,28 @@
 import UIKit
 
+import SnapKit
+
 class ShowDetailBookViewController: UIViewController {
     
     let bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         label.textColor = .black
         label.numberOfLines = 0
-        
         // FIXME: - 데이터주고받을때 completion 수정하기
         label.text = "Microsoft Office Inside Out"
-        
+        //
         return label
     }()
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = .white
         return scrollView
     }()
     
     let detailBookView: DetailBookView = {
         let view = DetailBookView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }()
@@ -44,26 +42,22 @@ class ShowDetailBookViewController: UIViewController {
     }
     
     func setupViewsLayout() {
-        self.view.addConstraints([
-            self.bookTitleLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20),
-            self.bookTitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-            self.bookTitleLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-            self.scrollView.topAnchor.constraint(equalTo: self.bookTitleLabel.bottomAnchor, constant: 20),
-            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-            self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -20),
-        ])
+        self.bookTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(self.view).offset(10)
+            $0.leading.equalTo(self.view).offset(20)
+            $0.trailing.equalTo(self.view).offset(-20)
+        }
         
-        let contentViewCenterY = self.detailBookView.centerYAnchor.constraint(equalTo: self.scrollView.centerYAnchor)
-        contentViewCenterY.priority = .defaultLow
+        self.scrollView.snp.makeConstraints {
+            $0.top.equalTo(self.bookTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalTo(self.view)
+        }
         
-        self.scrollView.addConstraints([
-            self.detailBookView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
-            self.detailBookView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
-            self.detailBookView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
-            self.detailBookView.bottomAnchor.constraint(equalTo: self.scrollView.contentLayoutGuide.bottomAnchor),
-            self.detailBookView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            contentViewCenterY,
-        ])
+        self.detailBookView.snp.makeConstraints {
+            $0.top.centerX.equalTo(self.scrollView)
+            $0.leading.equalTo(self.scrollView).offset(20)
+            $0.trailing.bottom.equalTo(self.scrollView).offset(-20)
+            $0.bottom.equalTo(self.scrollView.contentLayoutGuide.snp.bottom)
+        }
     }
 }

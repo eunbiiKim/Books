@@ -1,11 +1,12 @@
 import UIKit
 
+import SnapKit
+
 class SearchBookTableViewCell: UITableViewCell {
     static let identifier = "SearchBookTableViewCell"
     
     let searchBookView: SearchBookView = {
         let view = SearchBookView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -26,11 +27,8 @@ class SearchBookTableViewCell: UITableViewCell {
 
 extension SearchBookTableViewCell {
     func setupView() {
-        self.contentView.addConstraints([
-            self.searchBookView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            self.searchBookView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            self.searchBookView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            self.searchBookView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-        ])
+        self.searchBookView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
     }
 }
