@@ -67,17 +67,17 @@ class SearchBookView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.setupView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.setupLayout()
+        self.setupView()
     }
 }
 
 extension SearchBookView {
-    func setupLayout() {
+    func setupView() {
         self.backgroundColor = .white
         
         self.addSubview(self.imageView)

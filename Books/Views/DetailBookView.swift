@@ -2,97 +2,81 @@ import UIKit
 
 import SnapKit
 
+import Then
+
 class DetailBookView: UIView {
     
-    let boxView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray5
-        return view
-    }()
+    lazy var boxView = UIView().then {
+        $0.backgroundColor = .systemGray5
+    }
     
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .white
-        return imageView
-    }()
+    lazy var imageView = UIImageView().then {
+        $0.backgroundColor = .white
+    }
     
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .leading
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 6
-        return stackView
-    }()
+    lazy var stackView = UIStackView().then {
+        $0.alignment = .leading
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.spacing = 6
+    }
     
-    let label1: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
-        return label
-    }()
+    lazy var label1 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        $0.textAlignment = .left
+        $0.numberOfLines = 0
+        $0.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
+    }
     
-    let label2: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.text = "asdfsflejfw;oijowjdofwijdoifwoidfo"
-        return label
-    }()
+    lazy var label2 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        $0.textAlignment = .left
+        $0.numberOfLines = 0
+        $0.text = "asdfsflejfw;oijowjdofwijdoifwoidfo"
+    }
     
-    let label3: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.text = "aslkdfjasalksdjflskjdlfsjdlkfsjdlkfjslkdfdf;lkdjf"
-        return label
-    }()
+    lazy var label3 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        $0.textAlignment = .left
+        $0.numberOfLines = 0
+        $0.text = "aslkdfjasalksdjflskjdlfsjdlkfsjdlkfjslkdfdf;lkdjf"
+    }
     
-    let label4: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.text = "aslkdfjas;lalsdjflskdjflsjdlfsdflsdflskdfdfkdjf"
-        return label
-    }()
+    lazy var label4 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        $0.textAlignment = .left
+        $0.numberOfLines = 0
+        $0.text = "aslkdfjas;lalsdjflskdjflsjdlfsdflsdflskdfdfkdjf"
+    }
     
-    let label5: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.textColor = .systemBlue
-        label.text = "aslkdfjlskjflskjdlfkalsdfjlsdjfslkdfldjdlfkjsldkfjlskdflsdkflsdfas;lkdjf"
-        return label
-    }()
+    lazy var label5 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        $0.textAlignment = .left
+        $0.numberOfLines = 0
+        $0.textColor = .systemBlue
+        $0.text = "aslkdfjlskjflskjdlfkalsdfjlsdjfslkdfldjdlfkjsldkfjlskdflsdkflsdfas;lkdjf"
+    }
     
-    let textView: UITextView = {
-        let textView = UITextView()
-        textView.text = "메모를 입력해보세요"
-        textView.layer.borderWidth = 2
-        textView.layer.cornerRadius = 10
-        textView.layer.borderColor = UIColor.systemGray6.cgColor
-        return textView
-    }()
+    lazy var textView = UITextView().then {
+        $0.text = "메모를 입력해보세요"
+        $0.layer.borderWidth = 2
+        $0.layer.cornerRadius = 10
+        $0.layer.borderColor = UIColor.systemGray6.cgColor
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.setupView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.setupLayout()
+        self.setupView()
     }
 }
 
 extension DetailBookView {
-    func setupLayout() {
+    func setupView() {
         self.backgroundColor = .white
 
         self.addSubview(self.boxView)
@@ -115,21 +99,17 @@ extension DetailBookView {
         self.imageView.snp.makeConstraints {
             $0.width.equalTo(100)
             $0.centerX.equalTo(self.boxView.snp.centerX)
-            $0.top.equalTo(self.boxView).offset(30)
-            $0.bottom.equalTo(self.boxView).offset(-30)
+            $0.top.bottom.equalTo(self.boxView).inset(30)
         }
         
         self.stackView.snp.makeConstraints {
             $0.top.equalTo(self.boxView.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         self.textView.snp.makeConstraints {
             $0.top.equalTo(self.stackView.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.trailing.bottom.equalToSuperview().inset(20)
             $0.height.equalTo(230)
         }
     }

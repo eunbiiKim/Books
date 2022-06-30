@@ -2,30 +2,26 @@ import UIKit
 
 import SnapKit
 
+import Then
+
 class ShowDetailBookViewController: UIViewController {
     
-    let bookTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        label.textColor = .black
-        label.numberOfLines = 0
+    lazy var bookTitleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        $0.textColor = .black
+        $0.numberOfLines = 0
         // FIXME: - 데이터주고받을때 completion 수정하기
-        label.text = "Microsoft Office Inside Out"
+        $0.text = "Microsoft Office Inside Out"
         //
-        return label
-    }()
+    }
     
-    let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
-        return scrollView
-    }()
+    lazy var scrollView = UIScrollView().then {
+        $0.backgroundColor = .white
+    }
     
-    let detailBookView: DetailBookView = {
-        let view = DetailBookView()
-        view.backgroundColor = .white
-        return view
-    }()
+    lazy var detailBookView = DetailBookView().then {
+        $0.backgroundColor = .white
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,20 +39,18 @@ class ShowDetailBookViewController: UIViewController {
     
     func setupViewsLayout() {
         self.bookTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.view).offset(10)
-            $0.leading.equalTo(self.view).offset(20)
-            $0.trailing.equalTo(self.view).offset(-20)
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         self.scrollView.snp.makeConstraints {
             $0.top.equalTo(self.bookTitleLabel.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalTo(self.view)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
         
         self.detailBookView.snp.makeConstraints {
             $0.top.centerX.equalTo(self.scrollView)
-            $0.leading.equalTo(self.scrollView).offset(20)
-            $0.trailing.bottom.equalTo(self.scrollView).offset(-20)
+            $0.leading.trailing.bottom.equalTo(self.scrollView).inset(20)
             $0.bottom.equalTo(self.scrollView.contentLayoutGuide.snp.bottom)
         }
     }

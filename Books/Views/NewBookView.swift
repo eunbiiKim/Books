@@ -2,69 +2,55 @@ import UIKit
 
 import SnapKit
 
+import Then
+
 class NewBookView: UIView {
-    let topView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray6
-        return view
-    }()
+    lazy var topView = UIView().then {
+        $0.backgroundColor = .systemGray6
+    }
     
-    let bottomView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray5
-        return view
-    }()
+    lazy var bottomView = UIView().then {
+        $0.backgroundColor = .systemGray5
+    }
     
-    let topImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .white
-        return imageView
-    }()
+    lazy var topImageView = UIImageView().then {
+        $0.backgroundColor = .white
+    }
     
-    let bottomStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 5
-        return stackView
-    }()
+    lazy var bottomStackView = UIStackView().then {
+        $0.alignment = .center
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.spacing = 5
+    }
     
-    let bottomLabel1: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
-        return label
-    }()
+    lazy var bottomLabel1 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
+    }
     
-    let bottomLabel2: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = "aslkdfjas;lkdjf"
-        return label
-    }()
+    lazy var bottomLabel2 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.text = "aslkdfjas;lkdjf"
+    }
     
-    let bottomLabel3: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = "aslkdfjas;lkdjf"
-        return label
-    }()
+    lazy var bottomLabel3 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.text = "aslkdfjas;lkdjf"
+    }
     
-    let bottomLabel4: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = "aslkdfjas;lkdjf"
-        return label
-    }()
+    lazy var bottomLabel4 = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.text = "aslkdfjas;lkdjf"
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

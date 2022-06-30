@@ -1,18 +1,18 @@
 import UIKit
 
-class ShowNewBooksViewController: UIViewController {
-    
-    let tableView: UITableView = {
-        let tableView = UITableView()
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        tableView.separatorStyle = .none
+import SnapKit
 
-        tableView.register(NewBookTableViewCell.self, forCellReuseIdentifier: NewBookTableViewCell.identifier)
+import Then
+
+class ShowNewBooksViewController: UIViewController {
+
+    lazy var tableView = UITableView().then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         
-        return tableView
-    }()
+        $0.separatorStyle = .none
+
+        $0.register(NewBookTableViewCell.self, forCellReuseIdentifier: NewBookTableViewCell.identifier)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +33,11 @@ class ShowNewBooksViewController: UIViewController {
         
         self.tableView.dataSource = self
         
-        self.tableView.frame = self.view.bounds
-        
         self.view.addSubview(self.tableView)
+        
+        self.tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 }
 

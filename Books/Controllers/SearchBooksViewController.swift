@@ -1,18 +1,18 @@
 import UIKit
 
+import SnapKit
+
+import Then
+
 class SearchBooksViewController: UIViewController {
 
-    let tableView: UITableView = {
-        let tableView = UITableView()
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+    lazy var tableView = UITableView().then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
 
-        tableView.register(NewBookTableViewCell.self, forCellReuseIdentifier: NewBookTableViewCell.identifier)
+        $0.register(NewBookTableViewCell.self, forCellReuseIdentifier: NewBookTableViewCell.identifier)
         
-        tableView.register(SearchBookTableViewCell.self, forCellReuseIdentifier: SearchBookTableViewCell.identifier)
-        
-        return tableView
-    }()
+        $0.register(SearchBookTableViewCell.self, forCellReuseIdentifier: SearchBookTableViewCell.identifier)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +36,12 @@ class SearchBooksViewController: UIViewController {
         self.tableView.delegate = self
         
         self.tableView.dataSource = self
-        
-        self.tableView.frame = self.view.bounds
-        
+
         self.view.addSubview(self.tableView)
+        
+        self.tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 }
 

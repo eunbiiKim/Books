@@ -2,13 +2,12 @@ import UIKit
 
 import SnapKit
 
+import Then
+
 class SearchBookTableViewCell: UITableViewCell {
     static let identifier = "SearchBookTableViewCell"
     
-    let searchBookView: SearchBookView = {
-        let view = SearchBookView()
-        return view
-    }()
+    lazy var searchBookView = SearchBookView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,7 +27,7 @@ class SearchBookTableViewCell: UITableViewCell {
 extension SearchBookTableViewCell {
     func setupView() {
         self.searchBookView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
 }

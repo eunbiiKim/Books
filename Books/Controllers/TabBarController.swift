@@ -2,9 +2,9 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
-    let firstTabViewController = ShowNewBooksViewController()
+    lazy var showNewBooksViewController = ShowNewBooksViewController()
     
-    let secondTabViewController = SearchBooksViewController()
+    lazy var searchBooksViewController = SearchBooksViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,11 +17,11 @@ class TabBarController: UITabBarController {
     }
     
     func configureContentViewControllers() {
-        let showNewBooksNavigationController = UINavigationController(rootViewController: self.firstTabViewController)
+        let showNewBooksNavigationController = UINavigationController(rootViewController: self.showNewBooksViewController)
         
-        let searchBooksNavigationController = UINavigationController(rootViewController: self.secondTabViewController)
+        let searchBooksNavigationController = UINavigationController(rootViewController: self.searchBooksViewController)
         
-        let viewControllers = [showNewBooksNavigationController as UIViewController, searchBooksNavigationController as UIViewController]
+        let viewControllers = [showNewBooksNavigationController, searchBooksNavigationController]
         
         self.viewControllers = viewControllers
         
@@ -34,8 +34,8 @@ class TabBarController: UITabBarController {
     }
     
     func configureTabBarItem() {
-        self.firstTabViewController.tabBarItem = UITabBarItem(title: "New", image: UIImage(systemName: "book"), tag: 0)
+        self.showNewBooksViewController.tabBarItem = UITabBarItem(title: "New", image: UIImage(systemName: "book"), tag: 0)
         
-        self.secondTabViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
+        self.searchBooksViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
     }
 }
