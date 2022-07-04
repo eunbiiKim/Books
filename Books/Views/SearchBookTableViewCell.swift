@@ -21,7 +21,9 @@ class SearchBookTableViewCell: UITableViewCell {
         fatalError(#function)
     }
     
-//    override func prepareForReuse() {}
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
 }
 
 extension SearchBookTableViewCell {

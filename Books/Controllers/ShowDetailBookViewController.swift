@@ -6,6 +6,8 @@ import Then
 
 class ShowDetailBookViewController: UIViewController {
     
+    lazy var bookModel = BookModel()
+    
     lazy var bookTitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         $0.textColor = .black
@@ -35,6 +37,12 @@ class ShowDetailBookViewController: UIViewController {
         self.scrollView.addSubview(self.detailBookView)
         
         self.setupViewsLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        self.bookModel.loadData(path: "books", query: "9781784399191")
     }
     
     func setupViewsLayout() {

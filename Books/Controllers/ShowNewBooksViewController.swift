@@ -14,6 +14,8 @@ class ShowNewBooksViewController: UIViewController {
         $0.register(NewBookTableViewCell.self, forCellReuseIdentifier: NewBookTableViewCell.identifier)
     }
     
+    lazy var bookModel = BookModel.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,6 +41,22 @@ class ShowNewBooksViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.bookModel.loadData(path: "new", query: nil) {
+            self.bookModel.fetchNewBook(data: self.bookModel.data) {
+                print("books1: \(self.bookModel.books.count)")
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
 }
 
 extension ShowNewBooksViewController: UITableViewDelegate {
@@ -52,12 +70,12 @@ extension ShowNewBooksViewController: UITableViewDelegate {
 
 extension ShowNewBooksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // FIXME: - 데이터주고받을때 수정하기
-        return 3
+        return self.bookModel.books.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NewBookTableViewCell.identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewBookTableViewCell.identifier, for: indexPath) as! NewBookTableViewCell
+        cell.setupCell(viewModel: self.bookModel.books, row: indexPath.row)
         return cell
     }
 }

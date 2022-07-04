@@ -14,6 +14,8 @@ class SearchBooksViewController: UIViewController {
         $0.register(SearchBookTableViewCell.self, forCellReuseIdentifier: SearchBookTableViewCell.identifier)
     }
     
+    lazy var bookModel = BookModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,9 +45,21 @@ class SearchBooksViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        self.bookModel.loadData(path: "search", query: "anroid")
+    }
 }
 
 extension SearchBooksViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let showDetailBookViewController = ShowDetailBookViewController()
+        
+        // FIXME: - 데이터주고받을때 completion 수정하기
+        self.present(showDetailBookViewController, animated: true, completion: nil)
+    }
 }
 
 extension SearchBooksViewController: UITableViewDataSource {

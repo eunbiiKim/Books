@@ -14,7 +14,8 @@ class NewBookView: UIView {
     }
     
     lazy var topImageView = UIImageView().then {
-        $0.backgroundColor = .white
+//        $0.backgroundColor = .white
+        $0.contentMode = .scaleAspectFill
     }
     
     lazy var bottomStackView = UIStackView().then {
