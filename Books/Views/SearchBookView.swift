@@ -4,6 +4,18 @@ import SnapKit
 
 class SearchBookView: UIView {
     
+    /*
+     response parameters : / 값이 없는 형태는 ""-> 빈 String
+     total
+     page
+     title
+     subtitle
+     isbn13
+     price
+     image - url
+     url
+     */
+    
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemGray6
@@ -19,7 +31,7 @@ class SearchBookView: UIView {
         return stackView
     }()
     
-    let label1: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.textAlignment = .left
@@ -28,7 +40,7 @@ class SearchBookView: UIView {
         return label
     }()
     
-    let label2: UILabel = {
+    let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .left
@@ -37,7 +49,7 @@ class SearchBookView: UIView {
         return label
     }()
     
-    let label3: UILabel = {
+    let isbn13Label: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         label.textAlignment = .left
@@ -46,7 +58,7 @@ class SearchBookView: UIView {
         return label
     }()
     
-    let label4: UILabel = {
+    let priceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .left
@@ -55,7 +67,7 @@ class SearchBookView: UIView {
         return label
     }()
     
-    let label5: UILabel = {
+    let urlLinkLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .left
@@ -82,11 +94,11 @@ extension SearchBookView {
         
         self.addSubview(self.imageView)
         self.addSubview(self.stackView)
-        self.stackView.addArrangedSubview(self.label1)
-        self.stackView.addArrangedSubview(self.label2)
-        self.stackView.addArrangedSubview(self.label3)
-        self.stackView.addArrangedSubview(self.label4)
-        self.stackView.addArrangedSubview(self.label5)
+        self.stackView.addArrangedSubview(self.titleLabel)
+        self.stackView.addArrangedSubview(self.subtitleLabel)
+        self.stackView.addArrangedSubview(self.isbn13Label)
+        self.stackView.addArrangedSubview(self.priceLabel)
+        self.stackView.addArrangedSubview(self.urlLinkLabel)
         
         self.imageView.snp.makeConstraints {
             $0.width.equalTo(100)

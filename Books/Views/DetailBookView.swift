@@ -6,6 +6,16 @@ import Then
 
 class DetailBookView: UIView {
     
+    /*
+     response parameters : / 값이 없는 형태는 ""-> 빈 String
+     title
+     subtitle
+     isbn13
+     price
+     image - url
+     url
+     */
+    
     lazy var boxView = UIView().then {
         $0.backgroundColor = .systemGray5
     }
@@ -21,35 +31,35 @@ class DetailBookView: UIView {
         $0.spacing = 6
     }
     
-    lazy var label1 = UILabel().then {
+    lazy var titleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         $0.textAlignment = .left
         $0.numberOfLines = 0
         $0.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
     }
     
-    lazy var label2 = UILabel().then {
+    lazy var subtitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         $0.textAlignment = .left
         $0.numberOfLines = 0
         $0.text = "asdfsflejfw;oijowjdofwijdoifwoidfo"
     }
     
-    lazy var label3 = UILabel().then {
+    lazy var isbn13Label = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
         $0.textAlignment = .left
         $0.numberOfLines = 0
         $0.text = "aslkdfjasalksdjflskjdlfsjdlkfsjdlkfjslkdfdf;lkdjf"
     }
     
-    lazy var label4 = UILabel().then {
+    lazy var priceLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         $0.textAlignment = .left
         $0.numberOfLines = 0
         $0.text = "aslkdfjas;lalsdjflskdjflsjdlfsdflsdflskdfdfkdjf"
     }
     
-    lazy var label5 = UILabel().then {
+    lazy var urlLinkLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         $0.textAlignment = .left
         $0.numberOfLines = 0
@@ -76,6 +86,10 @@ class DetailBookView: UIView {
 }
 
 extension DetailBookView {
+    func display(title: String?, subtitle: String?, isbn13: String?, price: String?, image: String?, url: String?) {
+        // 옵셔널 바인딩
+    }
+    
     func setupView() {
         self.backgroundColor = .white
 
@@ -85,11 +99,11 @@ extension DetailBookView {
         
         self.boxView.addSubview(self.imageView)
         
-        self.stackView.addArrangedSubview(self.label1)
-        self.stackView.addArrangedSubview(self.label2)
-        self.stackView.addArrangedSubview(self.label3)
-        self.stackView.addArrangedSubview(self.label4)
-        self.stackView.addArrangedSubview(self.label5)
+        self.stackView.addArrangedSubview(self.titleLabel)
+        self.stackView.addArrangedSubview(self.subtitleLabel)
+        self.stackView.addArrangedSubview(self.isbn13Label)
+        self.stackView.addArrangedSubview(self.priceLabel)
+        self.stackView.addArrangedSubview(self.urlLinkLabel)
         
         self.boxView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()

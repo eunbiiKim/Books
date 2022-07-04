@@ -24,28 +24,37 @@ class NewBookView: UIView {
         $0.spacing = 5
     }
     
-    lazy var bottomLabel1 = UILabel().then {
+    /*
+     response parameters : / 값이 없는 형태는 ""-> 빈 String
+     title
+     subtitle
+     isbn13
+     price
+     image - url
+     */
+    
+    lazy var titleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         $0.textAlignment = .center
         $0.numberOfLines = 0
         $0.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
     }
     
-    lazy var bottomLabel2 = UILabel().then {
+    lazy var subtitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         $0.textAlignment = .center
         $0.numberOfLines = 0
         $0.text = "aslkdfjas;lkdjf"
     }
     
-    lazy var bottomLabel3 = UILabel().then {
+    lazy var isbn13Label = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
         $0.textAlignment = .center
         $0.numberOfLines = 0
         $0.text = "aslkdfjas;lkdjf"
     }
     
-    lazy var bottomLabel4 = UILabel().then {
+    lazy var priceLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         $0.textAlignment = .center
         $0.numberOfLines = 0
@@ -77,10 +86,10 @@ extension NewBookView {
         
         self.bottomView.addSubview(self.bottomStackView)
         
-        self.bottomStackView.addArrangedSubview(self.bottomLabel1)
-        self.bottomStackView.addArrangedSubview(self.bottomLabel2)
-        self.bottomStackView.addArrangedSubview(self.bottomLabel3)
-        self.bottomStackView.addArrangedSubview(self.bottomLabel4)
+        self.bottomStackView.addArrangedSubview(self.titleLabel)
+        self.bottomStackView.addArrangedSubview(self.subtitleLabel)
+        self.bottomStackView.addArrangedSubview(self.isbn13Label)
+        self.bottomStackView.addArrangedSubview(self.priceLabel)
         
         self.topView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
