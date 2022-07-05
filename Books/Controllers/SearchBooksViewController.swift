@@ -14,7 +14,7 @@ class SearchBooksViewController: UIViewController {
         $0.register(SearchBookTableViewCell.self, forCellReuseIdentifier: SearchBookTableViewCell.identifier)
     }
     
-    lazy var bookModel = BookModel()
+    lazy var networkService = NetworkService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()

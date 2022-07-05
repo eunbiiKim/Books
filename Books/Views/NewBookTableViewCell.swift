@@ -32,15 +32,18 @@ class NewBookTableViewCell: UITableViewCell {
 }
 
 extension NewBookTableViewCell {
-    func configureCell(with viewModel: [Book], at row: Int) {
-        self.newBookView.titleLabel.text = viewModel[row].title!
-        self.newBookView.subtitleLabel.text = viewModel[row].subtitle!
-        self.newBookView.priceLabel.text = viewModel[row].price!
-        self.newBookView.isbn13Label.text = viewModel[row].isbn13!
+    func configureCell(by viewModel: [String: String]?) {
+        self.newBookView.titleLabel.text = viewModel?["title"]!
+        self.newBookView.subtitleLabel.text = viewModel?["subtitle"]!
+        self.newBookView.priceLabel.text = viewModel?["price"]!
+        self.newBookView.isbn13Label.text = viewModel?["isbn13"]!
+        
+        guard let urlString = viewModel?["image"] else { return }
+        guard let imageURL = URL(string: urlString) else { return }
+        guard let imageData = try? Data(contentsOf: imageURL) else { return }
+
         DispatchQueue.main.async {
-            if let image = UIImage(data: viewModel[row].image!) {
-                self.newBookView.topImageView.image = image
-            }
+            self.newBookView.topImageView.image = UIImage(data: imageData)
         }
     }
     

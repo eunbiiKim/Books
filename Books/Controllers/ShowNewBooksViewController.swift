@@ -5,6 +5,8 @@ import SnapKit
 import Then
 
 class ShowNewBooksViewController: UIViewController {
+    
+    lazy var networkService = NetworkService.shared
 
     lazy var tableView = UITableView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -17,9 +19,7 @@ class ShowNewBooksViewController: UIViewController {
         
         $0.dataSource = self
     }
-    
-    lazy var bookModel = BookModel.shared
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,11 +44,9 @@ class ShowNewBooksViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.bookModel.loadData(path: "new", query: nil) {
-            self.bookModel.fetchNewBook(data: self.bookModel.data) {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+        self.networkService.loadData(path: "new", query: nil) {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
@@ -65,12 +63,12 @@ extension ShowNewBooksViewController: UITableViewDelegate {
 
 extension ShowNewBooksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.bookModel.books.count
+        return self.networkService.bookModel.books?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NewBookTableViewCell.identifier, for: indexPath) as! NewBookTableViewCell
-        cell.configureCell(with: self.bookModel.books, at: indexPath.row)
+        cell.configureCell(by: self.networkService.bookModel.books?[indexPath.row])
         return cell
     }
 }

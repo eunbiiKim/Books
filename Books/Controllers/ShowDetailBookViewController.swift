@@ -6,7 +6,7 @@ import Then
 
 class ShowDetailBookViewController: UIViewController {
     
-    lazy var bookModel = BookModel()
+    lazy var networkService = NetworkService.shared
     
     lazy var bookTitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .bold)
