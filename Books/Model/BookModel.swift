@@ -3,26 +3,31 @@ import Foundation
 class BookModel {
     static let shared = BookModel()
     
-    var books: [Book] = []
+    lazy var books: [Book] = []
     
-    var data: [String: Any] = [:]
+    lazy var data: [String: Any] = [:]
     
-    func loadData(path: String, query: String?, completionHandler: @escaping () -> Void) {
-        // FIXME: - url 만드는 함수 따로 만들기
+    // FIXME: - 이 url로 다 쓸거니까 혹시 프로퍼티 옵저버가 더 나은가?
+    lazy var url = { (path: String, query: String?) -> URL? in
         let baseURL = "https://api.itbook.store"
-
+        
         var urlComponent = URLComponents(string: baseURL)
-
+        
         urlComponent?.path = "/1.0/\(path)"
-
+        
         let query = "/"+(query ?? "")
-
+        
         if path != "new" {
             urlComponent?.path.append(query)
         }
+        // error handligin 만들기 -> alert 만들고 종료
         
-//         수정 -> alert -> alert 함수 만들기
-        guard let requestURL = urlComponent?.url else { return }
+        return urlComponent?.url
+    }
+    
+    func loadData(path: String, query: String?, completionHandler: @escaping () -> Void) {
+        
+        guard let requestURL = self.url(path, query) else { return }
         
         let sessionConfiguration = URLSessionConfiguration.default
         
@@ -44,31 +49,17 @@ class BookModel {
             guard let resultData = data else { return }
             
             do {
-                print("success")
                 let jsonObject = try JSONSerialization.jsonObject(with: resultData, options: [])
-//                print(jsonObject)
-                guard let dictionay = jsonObject as? [String: Any] else { return }
                 
-                self.data = dictionay
+                guard let dictionary = jsonObject as? [String: Any] else { return }
+                
+                self.data = dictionary
                 
                 completionHandler()
                 
-//                switch dictionay.keys.count {
-//                case 3:
-//                    self.fetchNewBook(data: dictionay) {
-//                        print("new")
-//                    }
-//                case 4:
-//                    self.fetchSearchBookData {
-//                        print("search")
-//                    }
-//                default:
-//                    self.fetchDetailBookData {
-//                        print("detail")
-//                    }
-//                }
             } catch let error {
                 print("error: \(error.localizedDescription)")
+                
                 completionHandler()
             }
         }
@@ -79,7 +70,6 @@ class BookModel {
     func fetchNewBook(data: [String: Any], completionHandler: @escaping () -> Void) {
         self.books = []
         
-        // 파싱해서 [book]]에 넣어야함
         let _books = data["books"] as! [[String: String]]
         _books.forEach { _book in
             var book = Book()
@@ -87,19 +77,31 @@ class BookModel {
             book.subtitle = _book["subtitle"]
             book.isbn13 = _book["isbn13"]
             book.price = _book["price"]
-            if let data = try? Data(contentsOf: URL(string: _book["image"]!)!) {
-                book.image = data
+            
+            // FIXME: - 연속된 옵셔널 바인딩은 어떻게 처리되는지? -> if let? guard let? forced optional? 제어문 전환? / 예외상황이 어떻게 나올까 생각하는게 중요?
+            guard let urlString = _book["image"] else {
+                completionHandler()
+                return
             }
+            guard let imageURL = URL(string: urlString) else {
+                completionHandler()
+                return
+            }
+            guard let imageData = try? Data(contentsOf: imageURL) else {
+                completionHandler()
+                return
+            }
+            book.image = imageData
+            
             self.books.append(book)
         }
         completionHandler()
-
     }
     // search 일때
     func fetchSearchBookData(completionHandler: @escaping () -> Void) {
         completionHandler()
     }
-    // detail 일때 데이터 처리 함수 넣기
+    // detail 일때
     func fetchDetailBookData(completionHandler: @escaping () -> Void) {
         completionHandler()
     }

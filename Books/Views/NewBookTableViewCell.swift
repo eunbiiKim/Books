@@ -23,18 +23,22 @@ class NewBookTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.newBookView.titleLabel.text = nil
+        self.newBookView.subtitleLabel.text = nil
+        self.newBookView.priceLabel.text = nil
+        self.newBookView.isbn13Label.text = nil
         self.newBookView.topImageView.image = nil
     }
 }
 
 extension NewBookTableViewCell {
-    func setupCell(viewModel: [Book], row: Int) {
+    func configureCell(with viewModel: [Book], at row: Int) {
         self.newBookView.titleLabel.text = viewModel[row].title!
         self.newBookView.subtitleLabel.text = viewModel[row].subtitle!
         self.newBookView.priceLabel.text = viewModel[row].price!
         self.newBookView.isbn13Label.text = viewModel[row].isbn13!
-        if let image = UIImage(data: viewModel[row].image!) {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            if let image = UIImage(data: viewModel[row].image!) {
                 self.newBookView.topImageView.image = image
             }
         }

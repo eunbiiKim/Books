@@ -12,6 +12,10 @@ class ShowNewBooksViewController: UIViewController {
         $0.separatorStyle = .none
 
         $0.register(NewBookTableViewCell.self, forCellReuseIdentifier: NewBookTableViewCell.identifier)
+        
+        $0.delegate = self
+        
+        $0.dataSource = self
     }
     
     lazy var bookModel = BookModel.shared
@@ -22,18 +26,14 @@ class ShowNewBooksViewController: UIViewController {
         self.view.backgroundColor = .white
         
         self.navigationItem.title = "New Books"
-        
+
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         self.navigationController?.navigationBar.topItem?.largeTitleDisplayMode = .automatic
 
         self.navigationController?.navigationBar.backgroundColor = .white
-        
+
         self.navigationController?.navigationBar.barTintColor = .white
-        
-        self.tableView.delegate = self
-        
-        self.tableView.dataSource = self
         
         self.view.addSubview(self.tableView)
         
@@ -46,16 +46,11 @@ class ShowNewBooksViewController: UIViewController {
         super.viewWillAppear(animated)
         self.bookModel.loadData(path: "new", query: nil) {
             self.bookModel.fetchNewBook(data: self.bookModel.data) {
-                print("books1: \(self.bookModel.books.count)")
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             }
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
 }
 
@@ -75,7 +70,7 @@ extension ShowNewBooksViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NewBookTableViewCell.identifier, for: indexPath) as! NewBookTableViewCell
-        cell.setupCell(viewModel: self.bookModel.books, row: indexPath.row)
+        cell.configureCell(with: self.bookModel.books, at: indexPath.row)
         return cell
     }
 }
