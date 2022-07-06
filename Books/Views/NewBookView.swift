@@ -14,7 +14,6 @@ class NewBookView: UIView {
     }
     
     lazy var topImageView = UIImageView().then {
-//        $0.backgroundColor = .white
         $0.contentMode = .scaleAspectFill
     }
     
@@ -24,42 +23,33 @@ class NewBookView: UIView {
         $0.distribution = .equalSpacing
         $0.spacing = 5
     }
-    
-    /*
-     response parameters : / 값이 없는 형태는 ""-> 빈 String
-     title
-     subtitle
-     isbn13
-     price
-     image - url
-     */
-    
+
     lazy var titleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         $0.textAlignment = .center
         $0.numberOfLines = 0
-        $0.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
+        $0.text = nil
     }
     
     lazy var subtitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         $0.textAlignment = .center
         $0.numberOfLines = 0
-        $0.text = "aslkdfjas;lkdjf"
+        $0.text = nil
     }
     
     lazy var isbn13Label = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
         $0.textAlignment = .center
         $0.numberOfLines = 0
-        $0.text = "aslkdfjas;lkdjf"
+        $0.text = nil
     }
     
     lazy var priceLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         $0.textAlignment = .center
         $0.numberOfLines = 0
-        $0.text = "aslkdfjas;lkdjf"
+        $0.text = nil
     }
     
     override init(frame: CGRect) {
@@ -77,7 +67,7 @@ extension NewBookView {
     func setupLayout() {
         self.backgroundColor = .white
         
-        self.layer.masksToBounds = true
+        self.clipsToBounds = true
         self.layer.cornerRadius = 10
         
         self.addSubview(self.topView)

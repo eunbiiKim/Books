@@ -5,23 +5,13 @@ import SnapKit
 import Then
 
 class DetailBookView: UIView {
-    
-    /*
-     response parameters : / 값이 없는 형태는 ""-> 빈 String
-     title
-     subtitle
-     isbn13
-     price
-     image - url
-     url
-     */
-    
+
     lazy var boxView = UIView().then {
         $0.backgroundColor = .systemGray5
     }
     
     lazy var imageView = UIImageView().then {
-        $0.backgroundColor = .white
+        $0.contentMode = .scaleAspectFill
     }
     
     lazy var stackView = UIStackView().then {
@@ -35,28 +25,28 @@ class DetailBookView: UIView {
         $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         $0.textAlignment = .left
         $0.numberOfLines = 0
-        $0.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
+        $0.text = nil
     }
     
     lazy var subtitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         $0.textAlignment = .left
         $0.numberOfLines = 0
-        $0.text = "asdfsflejfw;oijowjdofwijdoifwoidfo"
+        $0.text = nil
     }
     
     lazy var isbn13Label = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
         $0.textAlignment = .left
         $0.numberOfLines = 0
-        $0.text = "aslkdfjasalksdjflskjdlfsjdlkfsjdlkfjslkdfdf;lkdjf"
+        $0.text = nil
     }
     
     lazy var priceLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         $0.textAlignment = .left
         $0.numberOfLines = 0
-        $0.text = "aslkdfjas;lalsdjflskdjflsjdlfsdflsdflskdfdfkdjf"
+        $0.text = nil
     }
     
     lazy var urlLinkLabel = UILabel().then {
@@ -64,7 +54,7 @@ class DetailBookView: UIView {
         $0.textAlignment = .left
         $0.numberOfLines = 0
         $0.textColor = .systemBlue
-        $0.text = "aslkdfjlskjflskjdlfkalsdfjlsdjfslkdfldjdlfkjsldkfjlskdflsdkflsdfas;lkdjf"
+        $0.text = nil
     }
     
     lazy var textView = UITextView().then {

@@ -3,79 +3,53 @@ import UIKit
 import SnapKit
 
 class SearchBookView: UIView {
+
+    lazy var imageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+    }
     
-    /*
-     response parameters : / 값이 없는 형태는 ""-> 빈 String
-     total
-     page
-     title
-     subtitle
-     isbn13
-     price
-     image - url
-     url
-     */
+    lazy var stackView = UIStackView().then {
+        $0.alignment = .leading
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.spacing = 5
+    }
     
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .systemGray6
-        return imageView
-    }()
+    lazy var titleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        $0.textAlignment = .left
+        $0.numberOfLines = 1
+        $0.text = nil
+    }
     
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .leading
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 5
-        return stackView
-    }()
+    lazy var subtitleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        $0.textAlignment = .left
+        $0.numberOfLines = 1
+        $0.text = nil
+    }
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textAlignment = .left
-        label.numberOfLines = 1
-        label.text = "aslkdfjas;lkdjfsldkjflsjdflskjdflksdjlfskjdlkfsldfjslsldfslkdfjlsdkjflskdjlfk"
-        return label
-    }()
+    lazy var isbn13Label = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        $0.textAlignment = .left
+        $0.numberOfLines = 1
+        $0.text = nil
+    }
     
-    let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textAlignment = .left
-        label.numberOfLines = 1
-        label.text = nil
-        return label
-    }()
+    lazy var priceLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        $0.textAlignment = .left
+        $0.numberOfLines = 1
+        $0.text = nil
+    }
     
-    let isbn13Label: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textAlignment = .left
-        label.numberOfLines = 1
-        label.text = "aslkdfjasalksdjflskjdlfsjdlkfsjdlkfjslkdfdf;lkdjf"
-        return label
-    }()
-    
-    let priceLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textAlignment = .left
-        label.numberOfLines = 1
-        label.text = "aslkdfjas;lalsdjflskdjflsjdlfsdflsdflskdfdfkdjf"
-        return label
-    }()
-    
-    let urlLinkLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textAlignment = .left
-        label.numberOfLines = 1
-        label.textColor = .systemBlue
-        label.text = "aslkdfjlskjflskjdlfksjdlfkjsldkfjlskdflsdkflsdfas;lkdjf"
-        return label
-    }()
+    lazy var urlLinkLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        $0.textAlignment = .left
+        $0.numberOfLines = 1
+        $0.textColor = .systemBlue
+        $0.text = nil
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -102,9 +76,7 @@ extension SearchBookView {
         
         self.imageView.snp.makeConstraints {
             $0.width.equalTo(100)
-            // FIXME: - 데이터 받으면 없애기
-            $0.height.equalTo(100)
-            //
+            $0.height.equalTo(130)
             $0.top.equalTo(self.snp.top).offset(10)
             $0.leading.equalToSuperview().offset(20)
             $0.bottom.equalToSuperview().offset(-10)

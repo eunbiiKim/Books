@@ -32,22 +32,22 @@ class NewBookTableViewCell: UITableViewCell {
 }
 
 extension NewBookTableViewCell {
-    func configureCell(by viewModel: [String: String]?) {
-        self.newBookView.titleLabel.text = viewModel?["title"]!
-        self.newBookView.subtitleLabel.text = viewModel?["subtitle"]!
-        self.newBookView.priceLabel.text = viewModel?["price"]!
-        self.newBookView.isbn13Label.text = viewModel?["isbn13"]!
-        
-        guard let urlString = viewModel?["image"] else { return }
-        guard let imageURL = URL(string: urlString) else { return }
-        guard let imageData = try? Data(contentsOf: imageURL) else { return }
+    func configureCell(by bookModel: [String: String]?) {
+        self.newBookView.titleLabel.text = bookModel?["title"] ?? ""
+        self.newBookView.subtitleLabel.text = bookModel?["subtitle"] ?? ""
+        self.newBookView.priceLabel.text = bookModel?["price"] ?? ""
+        self.newBookView.isbn13Label.text = bookModel?["isbn13"] ?? ""
 
         DispatchQueue.main.async {
+            guard let urlString = bookModel?["image"] else { return }
+            guard let imageURL = URL(string: urlString) else { return }
+            guard let imageData = try? Data(contentsOf: imageURL) else { return }
+
             self.newBookView.topImageView.image = UIImage(data: imageData)
         }
     }
     
-    func setupView() {
+    func setupView() {        
         self.newBookView.snp.makeConstraints {
             $0.top.bottom.equalTo(super.contentView).inset(10)
             $0.leading.trailing.equalTo(super.contentView).inset(20)

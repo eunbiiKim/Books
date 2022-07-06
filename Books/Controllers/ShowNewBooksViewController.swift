@@ -6,7 +6,7 @@ import Then
 
 class ShowNewBooksViewController: UIViewController {
     
-    lazy var networkService = NetworkService.shared
+    lazy var bookModel = [[String: String]]()
 
     lazy var tableView = UITableView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -23,6 +23,25 @@ class ShowNewBooksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // FIXME: - PullToRefresh 화면 새로고침 기능 구현을 해야하기 때문에 데이터 로딩은 한번만 하면 됨.
+        self.loadData()
+        
+        self.setupViewLayout()
+        
+        self.setupView()
+    }
+}
+
+extension ShowNewBooksViewController {
+    func setupViewLayout() {
+        self.view.addSubview(self.tableView)
+        
+        self.tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    func setupView() {
         self.view.backgroundColor = .white
         
         self.navigationItem.title = "New Books"
@@ -34,17 +53,11 @@ class ShowNewBooksViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = .white
 
         self.navigationController?.navigationBar.barTintColor = .white
-        
-        self.view.addSubview(self.tableView)
-        
-        self.tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.networkService.loadData(path: "new", query: nil) {
+    func loadData() {
+        NetworkService.shared.loadData(path: "new", query: nil) {
+            self.bookModel = NetworkService.shared.bookModel.books ?? [[String: String]]()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -56,19 +69,21 @@ extension ShowNewBooksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let showDetailBookViewController = ShowDetailBookViewController()
         
-        // FIXME: - 데이터주고받을때 completion 수정하기
-        self.present(showDetailBookViewController, animated: true, completion: nil)
+        let isbn13 = self.bookModel[indexPath.row]["isbn13"]!
+        
+        DispatchQueue.main.async {
+            showDetailBookViewController.isbn13 = isbn13
+            self.present(showDetailBookViewController, animated: true)
+        }
     }
 }
 
 extension ShowNewBooksViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.networkService.bookModel.books?.count ?? 0
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return self.bookModel.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NewBookTableViewCell.identifier, for: indexPath) as! NewBookTableViewCell
-        cell.configureCell(by: self.networkService.bookModel.books?[indexPath.row])
+        cell.configureCell(by: self.bookModel[indexPath.row])
         return cell
     }
 }

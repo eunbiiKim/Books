@@ -1,5 +1,10 @@
 import Foundation
+
 import UIKit
+
+import SnapKit
+
+import Then
 
 class NetworkService {
     static let shared = NetworkService()
@@ -18,7 +23,7 @@ class NetworkService {
         if path != "new" {
             urlComponent?.path.append(query)
         }
-        // error handligin 만들기 -> alert 만들고 종료
+        // error handligin 만들기 -> alert 만들고 return
         
         return urlComponent?.url
     }
@@ -26,6 +31,8 @@ class NetworkService {
     func loadData(path: String, query: String?, completionHandler: @escaping () -> Void) {
         
         guard let requestURL = self.configuraURL(path, query) else { return }
+        
+        print(requestURL)
 
         let sessionConfiguration = URLSessionConfiguration.default
         
@@ -41,25 +48,27 @@ class NetworkService {
             guard successRange.contains(statusCode) else {
                 // alertview 띄우기
                 print("statusCode: \(statusCode)")
+                completionHandler()
                 return
             }
-            
-            do {
-                let decoder = JSONDecoder()
-                
-                guard let _data = data else {
+            DispatchQueue.main.async {
+                do {
+                    let decoder = JSONDecoder()
+                    
+                    guard let _data = data else {
+                        completionHandler()
+                        return
+                    }
+                    
+                    self.bookModel = try decoder.decode(BookModel.self, from: _data)
+                    
                     completionHandler()
-                    return
+                    
+                } catch let error {
+                    print("error: \(error.localizedDescription)")
+                    // FIXME: - alert view
+                    completionHandler()
                 }
-                
-                self.bookModel = try decoder.decode(BookModel.self, from: _data)
-                
-                completionHandler()
-                
-            } catch let error {
-                print("error: \(error.localizedDescription)")
-                // FIXME: - alert view
-                completionHandler()
             }
         }
         dataTask.resume()
