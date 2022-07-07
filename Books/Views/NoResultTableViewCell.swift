@@ -5,8 +5,10 @@ import SnapKit
 import Then
 
 class NoResultTableViewCell: UITableViewCell {
+    // MARK: - stored properties
     static let identifier = "NoResultTableViewCell"
 
+    // MARK: - initialize methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -19,6 +21,7 @@ class NoResultTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - methods
 extension NoResultTableViewCell {
     func setupView() {
         self.contentView.backgroundColor = .white

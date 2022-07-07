@@ -5,10 +5,12 @@ import SnapKit
 import Then
 
 class SearchBookTableViewCell: UITableViewCell {
+    // MARK: - stored properties
     static let identifier = "SearchBookTableViewCell"
     
     lazy var searchBookView = SearchBookView()
     
+    // MARK: - initialize methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(self.searchBookView)
@@ -18,10 +20,6 @@ class SearchBookTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         fatalError(#function)
-    }
-    
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
     }
     
     override func prepareForReuse() {
@@ -35,6 +33,16 @@ class SearchBookTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - set up view
+extension SearchBookTableViewCell {
+    func setupView() {
+        self.searchBookView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+}
+
+// MARK: - methods
 extension SearchBookTableViewCell {
     func configureView(by viewModel: [String: String]?) {
         self.searchBookView.titleLabel.text = viewModel?["title"] ?? ""
@@ -49,12 +57,5 @@ extension SearchBookTableViewCell {
             }
         }
     }
-    
-    func setupView() {
-        self.searchBookView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-    
 }
 

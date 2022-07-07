@@ -5,7 +5,7 @@ import SnapKit
 import Then
 
 class DetailBookView: UIView {
-
+    // MARK: - stored properties
     lazy var boxView = UIView().then {
         $0.backgroundColor = .systemGray5
     }
@@ -59,11 +59,13 @@ class DetailBookView: UIView {
     
     lazy var textView = UITextView().then {
         $0.text = "메모를 입력해보세요"
+        $0.textColor = .systemGray3
         $0.layer.borderWidth = 2
         $0.layer.cornerRadius = 10
         $0.layer.borderColor = UIColor.systemGray6.cgColor
     }
     
+    // MARK: - initialize methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -75,11 +77,8 @@ class DetailBookView: UIView {
     }
 }
 
+// MARK: - set up view methods
 extension DetailBookView {
-    func display(title: String?, subtitle: String?, isbn13: String?, price: String?, image: String?, url: String?) {
-        // 옵셔널 바인딩
-    }
-    
     func setupView() {
         self.backgroundColor = .white
 
@@ -119,3 +118,29 @@ extension DetailBookView {
     }
 }
 
+// MARK: - methods
+extension DetailBookView {
+    func configureView(with bookModel: BookModel) {
+        guard let url = URL(string: bookModel.image ?? "") else { return }
+        guard let imageData = try? Data(contentsOf: url) else { return }
+        self.imageView.image = UIImage(data: imageData)
+        
+        self.titleLabel.text = bookModel.title ?? ""
+        self.subtitleLabel.text = bookModel.subtitle ?? ""
+        self.isbn13Label.text = bookModel.isbn13 ?? ""
+        self.priceLabel.text = bookModel.price ?? ""
+        self.urlLinkLabel.text = bookModel.url ?? ""
+        
+        guard let bookTitle = bookModel.title else { return }
+        if let bookContext = UserDefaults.standard.string(forKey: bookTitle) {
+            self.textView.text = bookContext
+            self.textView.textColor = .black
+        }
+    }
+}
+
+extension ConstraintPriority {
+    func makeSafeArea() {
+        
+    }
+}

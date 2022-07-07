@@ -3,7 +3,7 @@ import UIKit
 import SnapKit
 
 class SearchBookView: UIView {
-
+    // MARK: - stored properties
     lazy var imageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
     }
@@ -51,6 +51,7 @@ class SearchBookView: UIView {
         $0.text = nil
     }
     
+    // MARK: - initialize methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -62,6 +63,7 @@ class SearchBookView: UIView {
     }
 }
 
+// MARK: - set up view methods
 extension SearchBookView {
     func setupView() {
         self.backgroundColor = .white

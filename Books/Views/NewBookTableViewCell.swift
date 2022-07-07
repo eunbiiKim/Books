@@ -5,10 +5,12 @@ import SnapKit
 import Then
 
 class NewBookTableViewCell: UITableViewCell {
+    // MARK: - stored properties
     static let identifier = "NewBookTableViewCell"
     
     lazy var newBookView = NewBookView()
     
+    // MARK: - initialze method
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.backgroundColor = .white
@@ -31,7 +33,19 @@ class NewBookTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - set up view
 extension NewBookTableViewCell {
+    func setupView() {        
+        self.newBookView.snp.makeConstraints {
+            $0.top.bottom.equalTo(super.contentView).inset(10)
+            $0.leading.trailing.equalTo(super.contentView).inset(20)
+        }
+    }
+}
+
+// MARK: - methods
+extension NewBookTableViewCell {
+    // cell 을 구성하는 함수
     func configureCell(by bookModel: [String: String]?) {
         self.newBookView.titleLabel.text = bookModel?["title"] ?? ""
         self.newBookView.subtitleLabel.text = bookModel?["subtitle"] ?? ""
@@ -44,13 +58,6 @@ extension NewBookTableViewCell {
             guard let imageData = try? Data(contentsOf: imageURL) else { return }
 
             self.newBookView.topImageView.image = UIImage(data: imageData)
-        }
-    }
-    
-    func setupView() {        
-        self.newBookView.snp.makeConstraints {
-            $0.top.bottom.equalTo(super.contentView).inset(10)
-            $0.leading.trailing.equalTo(super.contentView).inset(20)
         }
     }
 }

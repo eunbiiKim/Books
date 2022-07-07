@@ -5,10 +5,14 @@ import SnapKit
 import Then
 
 class ShowDetailBookViewController: UIViewController {
-    
+    // MARK: - stored properties
     lazy var bookModel: BookModel? = nil
     
     lazy var isbn13: String? = nil
+    
+    lazy var paths: [String] = ["books"]
+    
+    lazy var queries: [String]? = []
     
     lazy var bookTitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .bold)
@@ -25,19 +29,21 @@ class ShowDetailBookViewController: UIViewController {
         $0.backgroundColor = .white
     }
     
+    // MARK: - view controller life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupViewLayout()
+        
+        self.setupView()
 
         self.loadData()
     }
 }
 
+// MARK: - set up view
 extension ShowDetailBookViewController {
     func setupViewLayout() {
-        self.view.backgroundColor = .white
-
         self.view.addSubview(self.bookTitleLabel)
         
         self.view.addSubview(self.scrollView)
@@ -62,23 +68,61 @@ extension ShowDetailBookViewController {
     }
     
     func setupView() {
-        DispatchQueue.main.async {
-            guard let url = URL(string: self.bookModel?.image ?? "") else { return }
-            guard let imageData = try? Data(contentsOf: url) else { return }
-            self.detailBookView.imageView.image = UIImage(data: imageData)
+        self.view.backgroundColor = .white
+        
+        self.detailBookView.textView.delegate = self
+        
+        self.detailBookView.textView.returnKeyType = .done
+    }
+}
+
+
+extension ShowDetailBookViewController {
+    // MARK: - load data
+    func loadData() {
+        print("isbn13: \(isbn13)")
+        self.queries?.append(self.isbn13 ?? "")
+        NetworkService.shared.loadData(paths: self.paths, queries: self.queries) {
+            self.bookModel = NetworkService.shared.bookModel
+            DispatchQueue.main.async {
+                self.bookTitleLabel.text = self.bookModel?.title ?? ""
+                self.detailBookView.configureView(with: self.bookModel!)
+            }
         }
-        self.bookTitleLabel.text = self.bookModel?.title ?? ""
-        self.detailBookView.titleLabel.text = self.bookModel?.title ?? ""
-        self.detailBookView.subtitleLabel.text = self.bookModel?.subtitle ?? ""
-        self.detailBookView.isbn13Label.text = self.bookModel?.isbn13 ?? ""
-        self.detailBookView.priceLabel.text = self.bookModel?.price ?? ""
-        self.detailBookView.urlLinkLabel.text = self.bookModel?.url ?? ""
+    }
+}
+
+// MARK: - text view delegate
+extension ShowDetailBookViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        // FIXME: - keyboard 높이만큼 scroll view도 올라가야함 -> NotificationCenter
+        if textView.textColor != .black {
+            textView.text.removeAll()
+            textView.textColor = .black
+        }
     }
     
-    func loadData() {
-        NetworkService.shared.loadData(path: "books", query: self.isbn13) {
-            self.bookModel = NetworkService.shared.bookModel
-            self.setupView()
+    func textViewDidEndEditing(_ textView: UITextView) {
+        guard let title = self.bookModel?.title else { return }
+        guard let text = textView.text else { return }
+        
+        if textView.textColor == .systemGray3 || text == "" {
+            self.detailBookView.textView.text = "메모를 입력해보세요"
+            self.detailBookView.textView.textColor = .systemGray3
+            if UserDefaults.standard.string(forKey: title) != nil {
+                UserDefaults.standard.removeObject(forKey: title)
+            }
+        } else {
+            UserDefaults.standard.set(text, forKey: title)
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            // MARK: - keyboard 내려갈때 scrollView도 내려가기 -> NotificationCenter
+            return false
+        }
+        return true
     }
 }

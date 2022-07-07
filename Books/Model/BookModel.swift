@@ -1,7 +1,9 @@
 import Foundation
 
 struct BookModel: Codable {
-
+    
+    /// ShowNewBook
+    /// https://api.itbook.store/1.0/new
     enum NewBookKeys: String, CodingKey {
         case total
 
@@ -10,6 +12,8 @@ struct BookModel: Codable {
         case error
     }
     
+    /// SearchBook
+    /// https://api.itbook.store/1.0/search/{query(검색어)/{page}
     enum SearchBookKeys: String, CodingKey {
         case error
         
@@ -20,6 +24,8 @@ struct BookModel: Codable {
         case books
     }
     
+    /// DetailBook
+    /// https://api.itbook.store/1.0/books/{isbn13}
     enum DetailBookKeys: String, CodingKey {
         case error
         

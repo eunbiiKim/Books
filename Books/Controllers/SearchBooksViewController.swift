@@ -5,7 +5,15 @@ import SnapKit
 import Then
 
 class SearchBooksViewController: UIViewController {
-
+    // MARK: - stored properties
+    typealias BookModel = [[String: String]]
+    
+    lazy var bookModel: BookModel? = BookModel()
+    
+    lazy var paths: [String] = ["search"]
+    
+    lazy var queries: [String]? = []
+    
     lazy var tableView = UITableView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
 
@@ -15,22 +23,14 @@ class SearchBooksViewController: UIViewController {
         
         $0.register(NoResultTableViewCell.self, forCellReuseIdentifier: NoResultTableViewCell.identifier)
     }
-    
-    lazy var bookModel: [[String: String]]? = [["": ""]]
-    
-    var isFiltered: Bool {
-        let searchController = self.navigationItem.searchController
-        let isActive = searchController?.isActive ?? false
-        let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
-        return isActive && isSearchBarHasText
-    }
-    
+
     lazy var activityIndicator = UIActivityIndicatorView().then {
         $0.hidesWhenStopped = true
         $0.style = .large
         $0.stopAnimating()
     }
     
+    // MARK: - view controller life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,6 +39,8 @@ class SearchBooksViewController: UIViewController {
         self.setupView()
     }
 }
+
+// MARK: - set up view
 extension SearchBooksViewController {
     func setupViewLayout() {
         self.view.addSubview(self.tableView)
@@ -86,23 +88,26 @@ extension SearchBooksViewController {
     }
 }
 
+// MARK: - search result updating delegate
 extension SearchBooksViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        NetworkService.shared.loadData(path: "search", query: searchController.searchBar.text) {
+        // MARK: - load data
+//        self.queries?.append(searchController.searchBar.text ?? "")
+//        self.queries?.in
+        NetworkService.shared.loadData(paths: self.paths, queries: self.queries) {
             self.bookModel?.removeAll()
             self.bookModel = NetworkService.shared.bookModel.books ?? [[:]]
             
-            self.activityIndicator.startAnimating()
-            
             DispatchQueue.main.async {
+                self.activityIndicator.startAnimating()
                 self.tableView.reloadData()
-                
                 self.activityIndicator.stopAnimating()
             }
         }
     }
 }
 
+// MARK: - table view delegate
 extension SearchBooksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if self.bookModel?.count != 0 {
@@ -121,6 +126,7 @@ extension SearchBooksViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - table view data source
 extension SearchBooksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.navigationItem.searchController?.searchBar.text == "" {
@@ -142,6 +148,7 @@ extension SearchBooksViewController: UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: NoResultTableViewCell.identifier, for: indexPath) as! NoResultTableViewCell
+
             self.tableView.separatorStyle = .none
             return cell
         }
