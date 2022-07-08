@@ -80,9 +80,8 @@ extension ShowDetailBookViewController {
 extension ShowDetailBookViewController {
     // MARK: - load data
     func loadData() {
-        print("isbn13: \(isbn13)")
-        self.queries?.append(self.isbn13 ?? "")
-        NetworkService.shared.loadData(paths: self.paths, queries: self.queries) {
+
+        NetworkService.shared.loadData(path: "books", query: self.isbn13) {
             self.bookModel = NetworkService.shared.bookModel
             DispatchQueue.main.async {
                 self.bookTitleLabel.text = self.bookModel?.title ?? ""

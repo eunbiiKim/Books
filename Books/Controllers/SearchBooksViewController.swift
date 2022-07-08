@@ -6,13 +6,15 @@ import Then
 
 class SearchBooksViewController: UIViewController {
     // MARK: - stored properties
+    static let identifier = "\(SearchBooksViewController.self)"
+
     typealias BookModel = [[String: String]]
     
     lazy var bookModel: BookModel? = BookModel()
     
-    lazy var paths: [String] = ["search"]
+    lazy var networkService = NetworkService.shared
     
-    lazy var queries: [String]? = []
+    lazy var urlComponent: [String: String] = [:]
     
     lazy var tableView = UITableView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -88,16 +90,31 @@ extension SearchBooksViewController {
     }
 }
 
+// MARK: - scroll view delegate
+extension SearchBooksViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // NetworkService.shared.page 가 += 1 씩 값이 증가한다.
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.height {
+//            self.filtereBookModel {
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            }
+        }
+    }
+}
+
 // MARK: - search result updating delegate
 extension SearchBooksViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         // MARK: - load data
-//        self.queries?.append(searchController.searchBar.text ?? "")
-//        self.queries?.in
-        NetworkService.shared.loadData(paths: self.paths, queries: self.queries) {
+        // 이 함수가 호출되면 NetworkService.shared.page가 1로 초기화된다
+        NetworkService.shared.loadData(path: "search", query: searchController.searchBar.text) {
             self.bookModel?.removeAll()
             self.bookModel = NetworkService.shared.bookModel.books ?? [[:]]
-            
+
             DispatchQueue.main.async {
                 self.activityIndicator.startAnimating()
                 self.tableView.reloadData()

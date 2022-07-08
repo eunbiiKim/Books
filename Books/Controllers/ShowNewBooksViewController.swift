@@ -79,12 +79,11 @@ extension ShowNewBooksViewController {
     func handleRefreshControl() {
         self.loadData()
         self.tableView.refreshControl?.endRefreshing()
-        var dict = UserDefaults.standard.removeObject(forKey: "memo")
     }
     
     //MARK: - load data
     func loadData() {
-        NetworkService.shared.loadData(paths: self.paths, queries: self.queries) {
+        NetworkService.shared.loadData(path: "new", query: nil) {
             self.bookModel = NetworkService.shared.bookModel.books ?? BookModel()
             self.filteredBookModel.removeAll()
             self.filtereBookModel {
@@ -115,8 +114,6 @@ extension ShowNewBooksViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
-        print("~~~> offsetY: \(offsetY)")
-        print("~~~> contentHeight: \(contentHeight)")
         if offsetY > contentHeight - scrollView.frame.height {
             self.filtereBookModel {
                 DispatchQueue.main.async {

@@ -14,6 +14,8 @@ class NetworkService {
     ///  -> 네트워크서비스를 싱글톤으로 접근 후 각 view controller에 있는 book model 에 넣기 위함.
     lazy var bookModel = BookModel()
     
+    lazy var page = 1
+    
     // MARK: - methods
     /// url 생성 함수
     func configuraURL(_ path: String, _ query: String?) -> URL? {
@@ -32,6 +34,42 @@ class NetworkService {
 
         return urlComponent?.url
     }
+    
+//    func configureURL(of components: [String: String]) -> URL? {
+//        let baseURL = "https://api.itbook.store"
+//
+//        var urlComponent = URLComponents(string: baseURL)
+//        
+//        urlComponent?.path = "/1.0/\(components["path"])"
+//        
+//        switch components["path"] {
+//            case "search":
+//                let query1 = "/"+(components["query1"])
+//                let query2 = "/"+(components["query2"])
+//                
+//                urlComponent?.path.append(query1)
+//                urlComponent?.path.append(query2)
+//
+//                return urlComponent?.url
+//                
+//            default:
+//                break
+//        }
+//        
+//        
+//        // error handligin 만들기 -> alert 만들고 return
+//
+////        urlComponent?.path = "/1.0/\(path)"
+//
+////        let query = "/"+(query ?? "")
+//
+////        if path != "new" {
+////            urlComponent?.path.append(query)
+////        }
+//        // error handligin 만들기 -> alert 만들고 return
+//
+//        return urlComponent?.url
+//    }
 
     
 //    /// 데이터 로드 함수
