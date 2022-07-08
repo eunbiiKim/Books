@@ -132,8 +132,6 @@ extension ShowNewBooksViewController: UIScrollViewDelegate {
 
 //MARK: - tableview view delegate
 extension ShowNewBooksViewController: UITableViewDelegate {
-    
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let showDetailBookViewController = ShowDetailBookViewController()
         

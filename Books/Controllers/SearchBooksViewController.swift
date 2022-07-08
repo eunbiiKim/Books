@@ -14,8 +14,6 @@ class SearchBooksViewController: UIViewController {
     
     lazy var networkService = NetworkService.shared
     
-    lazy var urlComponent: [String: String] = [:]
-    
     lazy var page = 1
     
     lazy var tableView = UITableView().then {
@@ -97,19 +95,18 @@ extension SearchBooksViewController {
 // MARK: - scroll view delegate
 extension SearchBooksViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.tableView.bounces = true
+//        self.tableView.bounces = true
         
         guard let tabBarController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? TabBarController else { return }
         
         if (self.tableView.contentSize.height - self.tableView.frame.size.height) == (self.tableView.contentOffset.y - tabBarController.tabBar.frame.height) {
-            self.tableView.bounces = false
+//            self.tableView.bounces = false
             scrollViewDidEndScrollingAnimation(scrollView)
         }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         self.page += 1
-        self.urlComponent["query2"] = "\(self.page)"
         NetworkService.shared.loadData(
             path: "search",
             query1: self.navigationItem.searchController?.searchBar.text,
@@ -117,14 +114,32 @@ extension SearchBooksViewController: UIScrollViewDelegate {
         ) {
             self.bookModel = BookModel.init()
             self.bookModel = NetworkService.shared.bookModel.books ?? [[:]]
-            //FIXME: - 검색 결과가 끝이면 끝이라고 alert 띄워주기
-            self.filteredBookModel += self.bookModel!
             
-            DispatchQueue.main.async {
-                self.activityIndicator.startAnimating()
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
+            if self.bookModel?.count != 0 {
+                self.filteredBookModel += self.bookModel!
+
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } else {
+                self.makeAlert()
             }
+        }
+    }
+    
+    // FIXME: - extension으로 넣어놓기
+    func makeAlert() {
+        let alertController = UIAlertController(
+            title: "더이상 검색 결과가 없습니다.",
+            message: nil,
+            preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        
+        alertController.addAction(okAction)
+        
+        self.present(alertController, animated: true) {
+            self.page -= 1
         }
     }
 }
@@ -133,7 +148,6 @@ extension SearchBooksViewController: UIScrollViewDelegate {
 extension SearchBooksViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         // MARK: - load data
-        // 이 함수가 호출되면 NetworkService.shared.page가 1로 초기화된다
         self.page = 1
         
         NetworkService.shared.loadData(
@@ -141,6 +155,7 @@ extension SearchBooksViewController: UISearchResultsUpdating {
             query1: searchController.searchBar.text,
             query2: "\(self.page)"
         ) {
+            self.activityIndicator.startAnimating()
             self.bookModel?.removeAll()
             self.bookModel = NetworkService.shared.bookModel.books ?? [[:]]
             self.filteredBookModel = self.bookModel!
@@ -150,6 +165,7 @@ extension SearchBooksViewController: UISearchResultsUpdating {
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
             }
+            self.activityIndicator.stopAnimating()
         }
     }
 }
