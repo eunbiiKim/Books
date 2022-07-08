@@ -10,10 +10,6 @@ class ShowDetailBookViewController: UIViewController {
     
     lazy var isbn13: String? = nil
     
-    lazy var paths: [String] = ["books"]
-    
-    lazy var queries: [String]? = []
-    
     lazy var bookTitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         $0.textColor = .black
@@ -80,8 +76,11 @@ extension ShowDetailBookViewController {
 extension ShowDetailBookViewController {
     // MARK: - load data
     func loadData() {
-
-        NetworkService.shared.loadData(path: "books", query: self.isbn13) {
+        NetworkService.shared.loadData(
+            path: "books",
+            query1: self.isbn13,
+            query2: nil
+        ) {
             self.bookModel = NetworkService.shared.bookModel
             DispatchQueue.main.async {
                 self.bookTitleLabel.text = self.bookModel?.title ?? ""

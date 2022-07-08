@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C2E8EAA9-8F11-404B-B544-AA9CA3A83862"
+            uuid = "81787CBE-4F8E-4DCF-BA10-F37B134A02D2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Books/Controllers/ShowDetailBookViewController.swift"
+            filePath = "Books/Controllers/SearchBooksViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "loadData()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "06DD52FE-0B07-4A92-91E5-501A6296B359"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Books/Controllers/ShowDetailBookViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "loadData()"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "updateSearchResults(for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

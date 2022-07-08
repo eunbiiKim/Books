@@ -11,10 +11,6 @@ class ShowNewBooksViewController: UIViewController {
     lazy var bookModel = BookModel()
     
     lazy var filteredBookModel = BookModel()
-    
-//    lazy var paths: [String] = ["new"]
-    
-//    lazy var queries: [String]? = []
 
     lazy var tableView = UITableView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +59,7 @@ extension ShowNewBooksViewController {
 
         self.navigationController?.navigationBar.barTintColor = .white
         
+        
         self.configureRefreshControl()
     }
     
@@ -83,7 +80,11 @@ extension ShowNewBooksViewController {
     
     //MARK: - load data
     func loadData() {
-        NetworkService.shared.loadData(path: "new", query: nil) {
+        NetworkService.shared.loadData(
+            path: "new",
+            query1: nil,
+            query2: nil
+        ) {
             self.bookModel = NetworkService.shared.bookModel.books ?? BookModel()
             self.filteredBookModel.removeAll()
             self.filtereBookModel {
@@ -112,13 +113,17 @@ extension ShowNewBooksViewController {
 //MARK: - scroll view delegate
 extension ShowNewBooksViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        if offsetY > contentHeight - scrollView.frame.height {
-            self.filtereBookModel {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+        guard let tabBarController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? TabBarController else { return }
+        
+        if (self.tableView.contentSize.height - self.tableView.frame.size.height) == (self.tableView.contentOffset.y - tabBarController.tabBar.frame.height) {
+            scrollViewDidEndScrollingAnimation(scrollView)
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        self.filtereBookModel {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
@@ -127,6 +132,8 @@ extension ShowNewBooksViewController: UIScrollViewDelegate {
 
 //MARK: - tableview view delegate
 extension ShowNewBooksViewController: UITableViewDelegate {
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let showDetailBookViewController = ShowDetailBookViewController()
         
