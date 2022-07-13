@@ -218,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				C3F5FC2B286AB53500413D30 /* TabBarController.swift */,
+				C3BA0785287BBC5800EE3E50 /* NewBooks */,
 				C3B78FE2286A807F004D8734 /* ShowNewBooksViewController.swift */,
 				C3F5FC32286ABC8C00413D30 /* SearchBooksViewController.swift */,
 				C3A4418B286C43EB0018A27B /* ShowDetailBookViewController.swift */,
@@ -232,6 +233,21 @@
 				C3AC6B402872DA1700BC6EE8 /* BookModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C3BA0785287BBC5800EE3E50 /* NewBooks */ = {
+			isa = PBXGroup;
+			children = (
+				C3BA0788287BBCF700EE3E50 /* subviews */,
+			);
+			path = NewBooks;
+			sourceTree = "<group>";
+		};
+		C3BA0788287BBCF700EE3E50 /* subviews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = subviews;
 			sourceTree = "<group>";
 		};
 		DCF155E3B2A8EE937B7EAB7F /* Frameworks */ = {
@@ -255,6 +271,7 @@
 				C372AA73286A769D003CB4DA /* Sources */,
 				C372AA74286A769D003CB4DA /* Frameworks */,
 				C372AA75286A769D003CB4DA /* Resources */,
+				22E76B66B6BCCCF82F43D945 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -296,6 +313,7 @@
 				C372AA93286A769E003CB4DA /* Sources */,
 				C372AA94286A769E003CB4DA /* Frameworks */,
 				C372AA95286A769E003CB4DA /* Resources */,
+				54F639DE686DC17D30C4605A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -340,7 +358,7 @@
 			);
 			mainGroup = C372AA6E286A769D003CB4DA;
 			packageReferences = (
-				C32BC919286D716B009391B4 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				C32BC919286D716B009391B4 /* XCRemoteSwiftPackageReference "SnapKit.git" */,
 				C370E4E7286D9DFD0061A5AD /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = C372AA78286A769D003CB4DA /* Products */;
@@ -403,6 +421,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		22E76B66B6BCCCF82F43D945 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Books/Pods-Books-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Books/Pods-Books-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Books/Pods-Books-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		39D08CF173C445ADE3E45953 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -423,6 +458,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		54F639DE686DC17D30C4605A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Books-BooksUITests/Pods-Books-BooksUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Books-BooksUITests/Pods-Books-BooksUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Books-BooksUITests/Pods-Books-BooksUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9BC53186EADD40D520033A8D /* [CP] Check Pods Manifest.lock */ = {
@@ -832,7 +884,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C32BC919286D716B009391B4 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		C32BC919286D716B009391B4 /* XCRemoteSwiftPackageReference "SnapKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -853,7 +905,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		C32BC91A286D716B009391B4 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C32BC919286D716B009391B4 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = C32BC919286D716B009391B4 /* XCRemoteSwiftPackageReference "SnapKit.git" */;
 			productName = SnapKit;
 		};
 		C370E4E8286D9DFD0061A5AD /* Then */ = {

@@ -181,6 +181,7 @@ extension SearchBooksViewController: UITableViewDelegate {
             
             DispatchQueue.main.async {
                 showDetailBookViewController.isbn13 = isbn13
+                showDetailBookViewController.modalPresentationStyle = .
                 self.present(showDetailBookViewController, animated: true)
             }
         } else {

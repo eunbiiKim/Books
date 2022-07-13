@@ -64,7 +64,7 @@ struct BookModel: Codable {
 
     var page: String?
 
-    var books: [[String: String]]?
+    var books: [Book]// = [[String: String]]?
 
     var error: String?
 
@@ -97,4 +97,15 @@ struct BookModel: Codable {
     var url: String?
 
     var pdf: [String: String]?
+}
+
+struct Book: Codable {
+    
+    var title: String?
+    
+    var subtitle: String?
+    
+    var url: String?
+    
+    var image: String?
 }

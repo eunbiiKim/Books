@@ -35,6 +35,37 @@ class ShowDetailBookViewController: UIViewController {
 
         self.loadData()
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//
+//        /// tabBarController에 property observer 만들기
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let tabBarController = appDelegate.window?.rootViewController as! TabBarController
+//        let navigationController = tabBarController.viewControllers?[1] as! UINavigationController
+//        if let presentingViewController = navigationController.viewControllers[0] as? SearchBooksViewController {
+//
+//            print("~~~> \(presentingViewController)")
+//            DispatchQueue.main.async {
+//                presentingViewController.tableView.reloadData()
+//            }
+//        }
+//    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        /// tabBarController에 property observer 만들기
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let tabBarController = appDelegate.window?.rootViewController as! TabBarController
+        let navigationController = tabBarController.viewControllers?[1] as! UINavigationController
+        if let presentingViewController = navigationController.viewControllers[0] as? SearchBooksViewController {
+
+            print("~~~> \(presentingViewController)")
+            DispatchQueue.main.async {
+                presentingViewController.tableView.reloadData()
+            }
+        }
+    }
 }
 
 // MARK: - set up view
