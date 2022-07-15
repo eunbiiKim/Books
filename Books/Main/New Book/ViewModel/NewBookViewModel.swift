@@ -39,14 +39,8 @@ class NewBookViewModel {
     
 //    func transform(path: String, query1: String?, query2: String?, request: Input) -> Output {
     func transform(request: Input) -> Output {
-        request.requestTrigger.subscribe(onNext: { [weak self] in
-            print("data : \($0)")
-            self?.loadData()
-        }).disposed(by: disposeBag)
-        
         request.requestTrigger
             .bind(onNext: { [weak self] in
-                print("requeste \($0)")
                 self?.loadData()
             }).disposed(by: disposeBag)
         return NewBookViewModel.Output(booksRelay: self.booksRelay)
