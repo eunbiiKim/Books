@@ -1,7 +1,6 @@
 import Foundation
 
-struct BookModel: Codable {
-    
+struct BookModel: Decodable {
     /// ShowNewBook
     /// https://api.itbook.store/1.0/new
     enum NewBookKeys: String, CodingKey {
@@ -63,8 +62,8 @@ struct BookModel: Codable {
     var total: String?
 
     var page: String?
-
-    var books: [Book]// = [[String: String]]?
+    
+    var books: [BookItem]?
 
     var error: String?
 
@@ -97,15 +96,4 @@ struct BookModel: Codable {
     var url: String?
 
     var pdf: [String: String]?
-}
-
-struct Book: Codable {
-    
-    var title: String?
-    
-    var subtitle: String?
-    
-    var url: String?
-    
-    var image: String?
 }

@@ -6,8 +6,6 @@ import Then
 
 class ShowDetailBookViewController: UIViewController {
     // MARK: - stored properties
-    lazy var bookModel: BookModel? = nil
-    
     lazy var isbn13: String? = nil
     
     lazy var bookTitleLabel = UILabel().then {
@@ -23,6 +21,10 @@ class ShowDetailBookViewController: UIViewController {
     
     lazy var detailBookView = DetailBookView().then {
         $0.backgroundColor = .white
+        
+        $0.textView.delegate = self
+        
+        $0.textView.returnKeyType = .done
     }
     
     // MARK: - view controller life cycle methods
@@ -36,31 +38,13 @@ class ShowDetailBookViewController: UIViewController {
         self.loadData()
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//
-//        /// tabBarController에 property observer 만들기
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let tabBarController = appDelegate.window?.rootViewController as! TabBarController
-//        let navigationController = tabBarController.viewControllers?[1] as! UINavigationController
-//        if let presentingViewController = navigationController.viewControllers[0] as? SearchBooksViewController {
-//
-//            print("~~~> \(presentingViewController)")
-//            DispatchQueue.main.async {
-//                presentingViewController.tableView.reloadData()
-//            }
-//        }
-//    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        /// tabBarController에 property observer 만들기
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let tabBarController = appDelegate.window?.rootViewController as! TabBarController
         let navigationController = tabBarController.viewControllers?[1] as! UINavigationController
         if let presentingViewController = navigationController.viewControllers[0] as? SearchBooksViewController {
 
-            print("~~~> \(presentingViewController)")
             DispatchQueue.main.async {
                 presentingViewController.tableView.reloadData()
             }
@@ -96,10 +80,6 @@ extension ShowDetailBookViewController {
     
     func setupView() {
         self.view.backgroundColor = .white
-        
-        self.detailBookView.textView.delegate = self
-        
-        self.detailBookView.textView.returnKeyType = .done
     }
 }
 
@@ -111,11 +91,10 @@ extension ShowDetailBookViewController {
             path: "books",
             query1: self.isbn13,
             query2: nil
-        ) {
-            self.bookModel = NetworkService.shared.bookModel
+        ) { bookModel in
             DispatchQueue.main.async {
-                self.bookTitleLabel.text = self.bookModel?.title ?? ""
-                self.detailBookView.configureView(with: self.bookModel!)
+                self.bookTitleLabel.text = bookModel.title ?? ""
+                self.detailBookView.configureView(with: bookModel)
             }
         }
     }
@@ -132,7 +111,7 @@ extension ShowDetailBookViewController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        guard let title = self.bookModel?.title else { return }
+        guard let title = self.bookTitleLabel.text else { return }
         guard let text = textView.text else { return }
         
         if textView.textColor == .systemGray3 || text == "" {

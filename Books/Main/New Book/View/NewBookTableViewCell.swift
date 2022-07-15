@@ -46,14 +46,14 @@ extension NewBookTableViewCell {
 // MARK: - methods
 extension NewBookTableViewCell {
     // cell 을 구성하는 함수
-    func configureCell(by bookModel: [String: String]?) {
-        self.newBookView.titleLabel.text = bookModel?["title"] ?? ""
-        self.newBookView.subtitleLabel.text = bookModel?["subtitle"] ?? ""
-        self.newBookView.priceLabel.text = bookModel?["price"] ?? ""
-        self.newBookView.isbn13Label.text = bookModel?["isbn13"] ?? ""
+    func configureCell(by bookModel: BookItem?) {
+        self.newBookView.titleLabel.text = bookModel?.title ?? ""
+        self.newBookView.subtitleLabel.text = bookModel?.subtitle ?? ""
+        self.newBookView.priceLabel.text = bookModel?.price ?? ""
+        self.newBookView.isbn13Label.text = bookModel?.isbn13 ?? ""
 
         DispatchQueue.main.async {
-            guard let urlString = bookModel?["image"] else { return }
+            guard let urlString = bookModel?.image else { return }
             guard let imageURL = URL(string: urlString) else { return }
             guard let imageData = try? Data(contentsOf: imageURL) else { return }
 

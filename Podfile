@@ -7,6 +7,8 @@ target 'Books' do
   pod 'RxSwift', '6.2.0'
   pod 'RxCocoa', '6.2.0'
 
+  pod 'RxViewController'
+
   target 'BooksTests' do
     inherit! :search_paths
   end

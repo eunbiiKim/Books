@@ -6,11 +6,7 @@ import Then
 
 class SearchBooksViewController: UIViewController {
     // MARK: - stored properties
-    typealias BookModel = [[String: String]]
-    
-    lazy var bookModel: BookModel? = BookModel()
-    
-    lazy var filteredBookModel = BookModel()
+    lazy var filteredBooks: [BookItem] = []
     
     lazy var networkService = NetworkService.shared
     
@@ -24,12 +20,14 @@ class SearchBooksViewController: UIViewController {
         $0.register(SearchBookTableViewCell.self, forCellReuseIdentifier: SearchBookTableViewCell.identifier)
         
         $0.register(NoResultTableViewCell.self, forCellReuseIdentifier: NoResultTableViewCell.identifier)
-    }
-    
-    lazy var activityIndicator = UIActivityIndicatorView().then {
-        $0.hidesWhenStopped = true
-        $0.style = .large
-        $0.stopAnimating()
+        
+        $0.separatorStyle = .none
+        
+        $0.delegate = self
+        
+        $0.dataSource = self
+        
+        $0.setContentOffset(CGPoint(x: 0.0, y: $0.contentOffset.y), animated: true)
     }
     
     // MARK: - view controller life cycle methods
@@ -47,15 +45,8 @@ extension SearchBooksViewController {
     func setupViewLayout() {
         self.view.addSubview(self.tableView)
         
-        self.view.addSubview(self.activityIndicator)
-        
         self.tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-        }
-        
-        self.activityIndicator.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-            $0.width.height.equalTo(50)
         }
     }
     
@@ -81,26 +72,15 @@ extension SearchBooksViewController {
         self.navigationController?.navigationBar.backgroundColor = .white
         
         self.navigationController?.navigationBar.barTintColor = .white
-        
-        self.tableView.separatorStyle = .none
-        
-        self.tableView.delegate = self
-        
-        self.tableView.dataSource = self
-        
-        self.tableView.setContentOffset(CGPoint(x: 0.0, y: self.tableView.contentOffset.y), animated: true)
     }
 }
 
 // MARK: - scroll view delegate
 extension SearchBooksViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.tableView.bounces = true
-        
         guard let tabBarController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? TabBarController else { return }
         
         if (self.tableView.contentSize.height - self.tableView.frame.size.height) == (self.tableView.contentOffset.y - tabBarController.tabBar.frame.height) {
-//            self.tableView.bounces = false
             scrollViewDidEndScrollingAnimation(scrollView)
         }
     }
@@ -111,13 +91,11 @@ extension SearchBooksViewController: UIScrollViewDelegate {
             path: "search",
             query1: self.navigationItem.searchController?.searchBar.text,
             query2: "\(self.page)"
-        ) {
-            self.bookModel = BookModel.init()
-            self.bookModel = NetworkService.shared.bookModel.books ?? [[:]]
+        ) { bookModel in
+            guard let books = bookModel.books else { return }
             
-            if self.bookModel?.count != 0 {
-                self.filteredBookModel += self.bookModel!
-
+            if books.count != 0 {
+                self.filteredBooks += books
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -154,18 +132,13 @@ extension SearchBooksViewController: UISearchResultsUpdating {
             path: "search",
             query1: searchController.searchBar.text,
             query2: "\(self.page)"
-        ) {
-            self.activityIndicator.startAnimating()
-            self.bookModel?.removeAll()
-            self.bookModel = NetworkService.shared.bookModel.books ?? [[:]]
-            self.filteredBookModel = self.bookModel!
-            
+        ) { bookModel in
+            guard let books = bookModel.books else { return }
+            self.filteredBooks = books
+
             DispatchQueue.main.async {
-                self.activityIndicator.startAnimating()
                 self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
             }
-            self.activityIndicator.stopAnimating()
         }
     }
 }
@@ -173,15 +146,16 @@ extension SearchBooksViewController: UISearchResultsUpdating {
 // MARK: - table view delegate
 extension SearchBooksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.filteredBookModel.count != 0 {
+        if self.filteredBooks.count != 0 {
             self.tableView.allowsSelection = true
             
             let showDetailBookViewController = ShowDetailBookViewController()
-            let isbn13 = self.filteredBookModel[indexPath.row]["isbn13"]
+            let isbn13 = self.filteredBooks[indexPath.row].isbn13
             
             DispatchQueue.main.async {
                 showDetailBookViewController.isbn13 = isbn13
-                showDetailBookViewController.modalPresentationStyle = .
+                //FIXME: modalPresentationStyle
+                showDetailBookViewController.modalPresentationStyle = .popover
                 self.present(showDetailBookViewController, animated: true)
             }
         } else {
@@ -196,8 +170,8 @@ extension SearchBooksViewController: UITableViewDataSource {
         if self.navigationItem.searchController?.searchBar.text == "" {
             return 0
         } else {
-            if self.filteredBookModel.count != 0 {
-                return self.filteredBookModel.count
+            if self.filteredBooks.count != 0 {
+                return self.filteredBooks.count
             } else {
                 return 1
             }
@@ -205,9 +179,9 @@ extension SearchBooksViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if self.filteredBookModel.count != 0 {
+        if self.filteredBooks.count != 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: SearchBookTableViewCell.identifier, for: indexPath) as! SearchBookTableViewCell
-            cell.configureView(by: self.filteredBookModel[indexPath.row])
+            cell.configureView(by: self.filteredBooks[indexPath.row])
             self.tableView.separatorStyle = .singleLine
             return cell
         } else {

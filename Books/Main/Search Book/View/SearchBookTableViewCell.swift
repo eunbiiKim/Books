@@ -44,14 +44,14 @@ extension SearchBookTableViewCell {
 
 // MARK: - methods
 extension SearchBookTableViewCell {
-    func configureView(by viewModel: [String: String]?) {
-        self.searchBookView.titleLabel.text = viewModel?["title"] ?? ""
-        self.searchBookView.subtitleLabel.text = viewModel?["subtitle"] ?? ""
-        self.searchBookView.isbn13Label.text = viewModel?["isbn13"] ?? ""
-        self.searchBookView.priceLabel.text = viewModel?["price"] ?? ""
-        self.searchBookView.urlLinkLabel.text = viewModel?["url"] ?? ""
+    func configureView(by viewModel: BookItem?) {
+        self.searchBookView.titleLabel.text = viewModel?.title ?? ""
+        self.searchBookView.subtitleLabel.text = viewModel?.subtitle ?? ""
+        self.searchBookView.isbn13Label.text = viewModel?.isbn13 ?? ""
+        self.searchBookView.priceLabel.text = viewModel?.price ?? ""
+        self.searchBookView.urlLinkLabel.text = viewModel?.url ?? ""
         
-        if let url = URL(string: viewModel?["image"] ?? "") {
+        if let url = URL(string: viewModel?.image ?? "") {
             if let imageData = try? Data(contentsOf: url) {
                 self.searchBookView.imageView.image = UIImage(data: imageData)
             }

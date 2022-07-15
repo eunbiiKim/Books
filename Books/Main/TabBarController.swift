@@ -1,4 +1,6 @@
 import UIKit
+import RxCocoa
+import RxSwift
 
 class TabBarController: UITabBarController {
     
@@ -8,11 +10,11 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.configureContentViewControllers()
-        
+
         self.configureTabBar()
-        
+
         self.configureTabBarItem()
     }
     
