@@ -14,8 +14,8 @@
             filePath = "Books/MVVM Practice/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "15"
-            endingLineNumber = "15"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "reload(completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>

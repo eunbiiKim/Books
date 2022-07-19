@@ -48,12 +48,11 @@
 		C3C0FF0C2875223900B6B498 /* NoResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0FF0B2875223900B6B498 /* NoResultTableViewCell.swift */; };
 		C3C0FF0D2875223900B6B498 /* NoResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0FF0B2875223900B6B498 /* NoResultTableViewCell.swift */; };
 		C3C0FF0E2875223900B6B498 /* NoResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0FF0B2875223900B6B498 /* NoResultTableViewCell.swift */; };
-		C3C8398928863CA20093BB92 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C8398828863CA20093BB92 /* Repository.swift */; };
 		C3C8398D28863E7A0093BB92 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C8398C28863E7A0093BB92 /* Service.swift */; };
-		C3C8398F28863F500093BB92 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C8398E28863F500093BB92 /* ViewModel.swift */; };
+		C3C8398F28863F500093BB92 /* NewBooksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C8398E28863F500093BB92 /* NewBooksViewModel.swift */; };
 		C3C8399128863FE80093BB92 /* MVVM_ShowNewBooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C8399028863FE80093BB92 /* MVVM_ShowNewBooksViewController.swift */; };
-		C3C83993288641B60093BB92 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C83992288641B60093BB92 /* Entity.swift */; };
-		C3C839952886473B0093BB92 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C839942886473B0093BB92 /* Model.swift */; };
+		C3C83993288641B60093BB92 /* NewBooksJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C83992288641B60093BB92 /* NewBooksJSON.swift */; };
+		C3C839952886473B0093BB92 /* NewBooksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C839942886473B0093BB92 /* NewBooksModel.swift */; };
 		C3EF616F2881367300B2C9AC /* NewBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EF616E2881367300B2C9AC /* NewBookViewModel.swift */; };
 		C3EF61702881367300B2C9AC /* NewBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EF616E2881367300B2C9AC /* NewBookViewModel.swift */; };
 		C3EF61712881367300B2C9AC /* NewBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EF616E2881367300B2C9AC /* NewBookViewModel.swift */; };
@@ -112,12 +111,11 @@
 		C3AC6B402872DA1700BC6EE8 /* BookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookModel.swift; sourceTree = "<group>"; };
 		C3B78FE2286A807F004D8734 /* ShowNewBooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowNewBooksViewController.swift; sourceTree = "<group>"; };
 		C3C0FF0B2875223900B6B498 /* NoResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultTableViewCell.swift; sourceTree = "<group>"; };
-		C3C8398828863CA20093BB92 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		C3C8398C28863E7A0093BB92 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
-		C3C8398E28863F500093BB92 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		C3C8398E28863F500093BB92 /* NewBooksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBooksViewModel.swift; sourceTree = "<group>"; };
 		C3C8399028863FE80093BB92 /* MVVM_ShowNewBooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVM_ShowNewBooksViewController.swift; sourceTree = "<group>"; };
-		C3C83992288641B60093BB92 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
-		C3C839942886473B0093BB92 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		C3C83992288641B60093BB92 /* NewBooksJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBooksJSON.swift; sourceTree = "<group>"; };
+		C3C839942886473B0093BB92 /* NewBooksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBooksModel.swift; sourceTree = "<group>"; };
 		C3EF616E2881367300B2C9AC /* NewBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBookViewModel.swift; sourceTree = "<group>"; };
 		C3F5FC2B286AB53500413D30 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C3F5FC32286ABC8C00413D30 /* SearchBooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBooksViewController.swift; sourceTree = "<group>"; };
@@ -308,11 +306,10 @@
 		C3C8398728863C8C0093BB92 /* MVVM Practice */ = {
 			isa = PBXGroup;
 			children = (
-				C3C8398828863CA20093BB92 /* Repository.swift */,
-				C3C83992288641B60093BB92 /* Entity.swift */,
 				C3C8398C28863E7A0093BB92 /* Service.swift */,
-				C3C839942886473B0093BB92 /* Model.swift */,
-				C3C8398E28863F500093BB92 /* ViewModel.swift */,
+				C3C83992288641B60093BB92 /* NewBooksJSON.swift */,
+				C3C839942886473B0093BB92 /* NewBooksModel.swift */,
+				C3C8398E28863F500093BB92 /* NewBooksViewModel.swift */,
 				C3C8399028863FE80093BB92 /* MVVM_ShowNewBooksViewController.swift */,
 			);
 			path = "MVVM Practice";
@@ -590,7 +587,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3C839952886473B0093BB92 /* Model.swift in Sources */,
+				C3C839952886473B0093BB92 /* NewBooksModel.swift in Sources */,
 				C3A44176286BF2120018A27B /* NewBookTableViewCell.swift in Sources */,
 				C3EF616F2881367300B2C9AC /* NewBookViewModel.swift in Sources */,
 				C3F5FC2C286AB53500413D30 /* TabBarController.swift in Sources */,
@@ -601,13 +598,12 @@
 				C31055F5287FF8560056E8E7 /* BookItem.swift in Sources */,
 				C3C0FF0C2875223900B6B498 /* NoResultTableViewCell.swift in Sources */,
 				C3B78FE3286A807F004D8734 /* ShowNewBooksViewController.swift in Sources */,
-				C3C8398F28863F500093BB92 /* ViewModel.swift in Sources */,
+				C3C8398F28863F500093BB92 /* NewBooksViewModel.swift in Sources */,
 				C3A4418C286C43EB0018A27B /* ShowDetailBookViewController.swift in Sources */,
 				C3C8398D28863E7A0093BB92 /* Service.swift in Sources */,
-				C3C8398928863CA20093BB92 /* Repository.swift in Sources */,
 				C3AC6B412872DA1700BC6EE8 /* BookModel.swift in Sources */,
 				C3AC6B3C2872D9C500BC6EE8 /* NetworkService.swift in Sources */,
-				C3C83993288641B60093BB92 /* Entity.swift in Sources */,
+				C3C83993288641B60093BB92 /* NewBooksJSON.swift in Sources */,
 				C3C8399128863FE80093BB92 /* MVVM_ShowNewBooksViewController.swift in Sources */,
 				C3A4417E286C0C4F0018A27B /* NewBookView.swift in Sources */,
 				C372AA7B286A769D003CB4DA /* AppDelegate.swift in Sources */,

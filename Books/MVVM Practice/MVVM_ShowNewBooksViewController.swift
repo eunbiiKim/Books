@@ -27,7 +27,7 @@ class MVVM_ShowNewBooksViewController: UIViewController, UITableViewDelegate {
         )
     }
     
-    let viewModel = ViewModel()
+    let viewModel = NewBooksViewModel()
     
     let disposeBag = DisposeBag()
     
@@ -37,13 +37,15 @@ class MVVM_ShowNewBooksViewController: UIViewController, UITableViewDelegate {
         self.setupViewLayout()
         
         self.setupView()
-
-        self.viewModel.reload {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
         
+        self.viewModel.reload(true)
+        
+        self.bind()
+    }
+}
+
+extension MVVM_ShowNewBooksViewController {
+    func bind() {
         self.viewModel.books
             .observe(on: MainScheduler.instance)
             .bind(to: self.tableView.rx.items(cellIdentifier: "\(NewBookTableViewCell.self)")) { row, viewModel, cell in
@@ -52,18 +54,27 @@ class MVVM_ShowNewBooksViewController: UIViewController, UITableViewDelegate {
                 cell.configureCell(by: viewModel)
             }
             .disposed(by: disposeBag)
-            
+        
+        self.tableView.rx.didScroll
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                guard let tabBarController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? TabBarController else { return }
+                
+                let contentHeight = Int(self?.tableView.contentSize.height ?? 0.0)
+                let frameHeight = Int(self?.tableView.frame.size.height ?? 0.0)
+                let contentOffsetY = Int(self?.tableView.contentOffset.y ?? 0.0)
+                let tabBarHeight = Int(tabBarController.tabBar.frame.height)
+                
+                if (contentHeight - frameHeight) == (contentOffsetY - tabBarHeight) {
+                    self?.viewModel.reload(false)
+                }
+            }).disposed(by: disposeBag)
     }
-}
-
-extension MVVM_ShowNewBooksViewController {
+    
     @objc /// Table view refresh
     func handleRefreshControl() {
-        self.viewModel.reload {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+        self.viewModel.reload(true)
+        
         self.tableView.refreshControl?.endRefreshing()
     }
 }

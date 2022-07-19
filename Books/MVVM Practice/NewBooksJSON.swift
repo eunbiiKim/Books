@@ -1,6 +1,6 @@
 import Foundation
 
-struct Entity: Decodable {
+struct NewBooksJSON: Decodable {
     /// ShowNewBook
     /// https://api.itbook.store/1.0/new
     enum NewBookKeys: String, CodingKey {

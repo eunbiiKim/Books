@@ -4,7 +4,7 @@ import RxSwift
 
 class TabBarController: UITabBarController {
     
-    lazy var showNewBooksViewController = ShowNewBooksViewController()
+//    lazy var showNewBooksViewController = ShowNewBooksViewController()
     
     lazy var mvvm_ShowNewBooksViewController = MVVM_ShowNewBooksViewController()
     
@@ -23,12 +23,12 @@ class TabBarController: UITabBarController {
     func configureContentViewControllers() {
         let mvvm_showNewBooksNavigationController = UINavigationController(rootViewController: self.mvvm_ShowNewBooksViewController)
         
-        let showNewBooksNavigationController = UINavigationController(rootViewController: self.showNewBooksViewController)
+//        let showNewBooksNavigationController = UINavigationController(rootViewController: self.showNewBooksViewController)
         
         let searchBooksNavigationController = UINavigationController(rootViewController: self.searchBooksViewController)
         
 //        let viewControllers = [showNewBooksNavigationController, searchBooksNavigationController]
-        let viewControllers = [mvvm_ShowNewBooksViewController, searchBooksNavigationController]
+        let viewControllers = [mvvm_showNewBooksNavigationController, searchBooksNavigationController]
         
         self.viewControllers = viewControllers
         
