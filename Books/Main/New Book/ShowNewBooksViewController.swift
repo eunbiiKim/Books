@@ -19,7 +19,7 @@ class ShowNewBooksViewController: UIViewController {
     
     lazy var filteredBooks: [BookItem] = []
     
-    var dataSource = BehaviorRelay<[BookItem]>(value: [])
+    var dataRelay = BehaviorRelay<[BookItem]>(value: [])
     
     var countingCompletedScroll = 0
     
@@ -88,7 +88,7 @@ extension ShowNewBooksViewController {
         request.booksRelay
             .subscribe(onNext: { books in
                 self.books = books
-                self.dataSource.accept(self.convertFilteredBookModel())
+                self.dataRelay.accept(self.convertFilteredBookModel())
             })
             .disposed(by: disposeBag)
     }
@@ -130,7 +130,7 @@ extension ShowNewBooksViewController {
                 }
             }).disposed(by: disposeBag)
         
-        self.dataSource
+        self.dataRelay
             .asDriver(onErrorJustReturn: [])
             .drive(self.tableView.rx.items) { tableView, row, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier: NewBookTableViewCell.identifier) as! NewBookTableViewCell
@@ -153,7 +153,7 @@ extension ShowNewBooksViewController {
                 if (contentHeight - frameHeight) == (contentOffsetY - tabBarHeight) {
                     self?.countingCompletedScroll += 1
                     if self?.countingCompletedScroll == 1 {
-                        self?.dataSource.accept((self?.convertFilteredBookModel())!)
+                        self?.dataRelay.accept((self?.convertFilteredBookModel())!)
                     }
                 } else {
                     self?.countingCompletedScroll = 0
