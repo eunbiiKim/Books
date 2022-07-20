@@ -62,6 +62,7 @@
 		C3F5FC33286ABC8C00413D30 /* SearchBooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5FC32286ABC8C00413D30 /* SearchBooksViewController.swift */; };
 		C3F5FC34286ABC8C00413D30 /* SearchBooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5FC32286ABC8C00413D30 /* SearchBooksViewController.swift */; };
 		C3F5FC35286ABC8C00413D30 /* SearchBooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5FC32286ABC8C00413D30 /* SearchBooksViewController.swift */; };
+		C3F71AE42887E11F00340F20 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F71AE32887E11F00340F20 /* ViewModelType.swift */; };
 		FA008CBE549F9CC8C2583CBB /* Pods_Books.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B18AAD1BCFA9709D1D1DD0 /* Pods_Books.framework */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +120,7 @@
 		C3EF616E2881367300B2C9AC /* NewBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBookViewModel.swift; sourceTree = "<group>"; };
 		C3F5FC2B286AB53500413D30 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C3F5FC32286ABC8C00413D30 /* SearchBooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBooksViewController.swift; sourceTree = "<group>"; };
+		C3F71AE32887E11F00340F20 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		E20CC7C4D2C5DBA8D18C08D4 /* Pods-Books-BooksUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Books-BooksUITests.debug.xcconfig"; path = "Target Support Files/Pods-Books-BooksUITests/Pods-Books-BooksUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E5F7E4487F3D1499BEB2240A /* Pods-Books.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Books.release.xcconfig"; path = "Target Support Files/Pods-Books/Pods-Books.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -306,6 +308,7 @@
 		C3C8398728863C8C0093BB92 /* MVVM Practice */ = {
 			isa = PBXGroup;
 			children = (
+				C3F71AE32887E11F00340F20 /* ViewModelType.swift */,
 				C3C8398C28863E7A0093BB92 /* Service.swift */,
 				C3C83992288641B60093BB92 /* NewBooksJSON.swift */,
 				C3C839942886473B0093BB92 /* NewBooksModel.swift */,
@@ -607,6 +610,7 @@
 				C3C8399128863FE80093BB92 /* MVVM_ShowNewBooksViewController.swift in Sources */,
 				C3A4417E286C0C4F0018A27B /* NewBookView.swift in Sources */,
 				C372AA7B286A769D003CB4DA /* AppDelegate.swift in Sources */,
+				C3F71AE42887E11F00340F20 /* ViewModelType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
