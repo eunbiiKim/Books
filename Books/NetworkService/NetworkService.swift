@@ -3,14 +3,9 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class NetworkService {
-    struct Input {
-        let requestTrigger: PublishRelay<Void>
-    }
+// Repository로 받은 Entity를 가지고 Model을 만들어서 뷰모델로 뿌려줌
 
-    struct Output {
-        let booksRelay: BehaviorRelay<[BookItem]>
-    }
+class NetworkService {
     
     // MARK: - Properties
     static let shared = NetworkService()
@@ -18,6 +13,8 @@ class NetworkService {
     let booksRelay = BehaviorRelay<[BookItem]>(value: [])
     
     var disposeBag = DisposeBag()
+    
+    var url: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     
     // MARK: - Methods
     /// url 생성 함수
@@ -39,12 +36,41 @@ class NetworkService {
         return urlComponent?.url
     }
     
-    func transform(path: String, query1: String?, query2: String?, request: Input) -> Output {
-        request.requestTrigger
-            .bind { [weak self] _ in
-                self?.loadBooksData(path: path, query1: query1, query2: query2)
-            }.disposed(by: disposeBag)
-        return Output(booksRelay: self.booksRelay)
+    func loadData(completionHandler: @escaping (BookModel) -> Void) {
+        
+        guard let url = URL(string: self.url.value) else { return }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            // client-side error
+            guard error == nil else { return }
+
+            // server-side error
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
+            let successRange = 200..<300
+            guard successRange.contains(statusCode) else {
+                // alertview 띄우기
+                print("statusCode: \(statusCode)")
+                return
+            }
+            do {
+                guard let _data = data else { return }
+
+                let entity = try JSONDecoder().decode(BookModel.self, from: _data)
+
+                completionHandler(entity)
+
+            } catch let error {
+                print("error: \(error.localizedDescription)")
+                // FIXME: - alert view
+            }
+        }.resume()
+    }
+
+    func fetchBooks(completionHandler: @escaping ([BookItem]) -> Void) {
+        self.loadData { entity in
+            guard let books = entity.books else { return }
+            completionHandler(books)
+        }
     }
     
     func loadBooksData(path: String, query1: String?, query2: String?) {
@@ -106,8 +132,6 @@ class NetworkService {
             }
         }
     }
-    
-    
     
     /// 데이터 로드 함수 -> Search / Detail
     func loadData(path: String, query1: String?, query2: String?, completionHandler: @escaping (BookModel) -> Void) {

@@ -4,9 +4,7 @@ import RxSwift
 
 class TabBarController: UITabBarController {
     
-//    lazy var showNewBooksViewController = ShowNewBooksViewController()
-    
-    lazy var mvvm_ShowNewBooksViewController = MVVM_ShowNewBooksViewController()
+    lazy var newBookViewController = NewBookViewController()
     
     lazy var searchBooksViewController = SearchBooksViewController()
 
@@ -21,14 +19,11 @@ class TabBarController: UITabBarController {
     }
     
     func configureContentViewControllers() {
-        let mvvm_showNewBooksNavigationController = UINavigationController(rootViewController: self.mvvm_ShowNewBooksViewController)
-        
-//        let showNewBooksNavigationController = UINavigationController(rootViewController: self.showNewBooksViewController)
+        let newBookViewController = UINavigationController(rootViewController: self.newBookViewController)
         
         let searchBooksNavigationController = UINavigationController(rootViewController: self.searchBooksViewController)
         
-//        let viewControllers = [showNewBooksNavigationController, searchBooksNavigationController]
-        let viewControllers = [mvvm_showNewBooksNavigationController, searchBooksNavigationController]
+        let viewControllers = [newBookViewController, searchBooksNavigationController]
         
         self.viewControllers = viewControllers
         
@@ -41,9 +36,7 @@ class TabBarController: UITabBarController {
     }
     
     func configureTabBarItem() {
-        self.mvvm_ShowNewBooksViewController.tabBarItem = UITabBarItem(title: "New", image: UIImage(systemName: "book"), tag: 0)
-        
-//        self.showNewBooksViewController.tabBarItem = UITabBarItem(title: "New", image: UIImage(systemName: "book"), tag: 0)
+        self.newBookViewController.tabBarItem = UITabBarItem(title: "New", image: UIImage(systemName: "book"), tag: 0)
         
         self.searchBooksViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
     }

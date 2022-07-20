@@ -4,7 +4,7 @@ import SnapKit
 
 import Then
 
-class NewBookView: UIView {
+class NewBookContentView: UIView {
     // MARK: - stored properties
     lazy var topView = UIView().then {
         $0.backgroundColor = .systemGray6
@@ -66,7 +66,7 @@ class NewBookView: UIView {
 }
 
 // MARK: - set up view methods
-extension NewBookView {
+extension NewBookContentView {
     func setupLayout() {
         self.backgroundColor = .white
         
