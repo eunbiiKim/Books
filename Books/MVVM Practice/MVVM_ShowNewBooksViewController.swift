@@ -8,8 +8,8 @@ import RxSwift
 
 import RxCocoa
 
-class MVVM_ShowNewBooksViewController: UIViewController, UITableViewDelegate {
-    //MARK: - Properties
+class MVVM_ShowNewBooksViewController: UIViewController {
+    //MARK: - Property
     
     lazy var tableView = UITableView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -29,29 +29,35 @@ class MVVM_ShowNewBooksViewController: UIViewController, UITableViewDelegate {
     
     let viewModel = NewBooksViewModel()
     
+    let requestTrigger = PublishRelay<Void>()
+    
     let disposeBag = DisposeBag()
     
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.setupViewLayout()
         
         self.setupView()
-        
-        self.viewModel.reload(true)
-        
+
         self.bind()
+        
+        self.requestTrigger.accept(())
     }
 }
 
+//MARK: - Method
 extension MVVM_ShowNewBooksViewController {
     func bind() {
-        self.viewModel.books
+        let output = self.viewModel.transform(req: NewBooksViewModel.Input.init(requestTrigger: self.requestTrigger))
+        
+        output.booksRelay
             .observe(on: MainScheduler.instance)
-            .bind(to: self.tableView.rx.items(cellIdentifier: "\(NewBookTableViewCell.self)")) { row, viewModel, cell in
+            .bind(to: self.tableView.rx.items(cellIdentifier: "\(NewBookTableViewCell.self)")) { row, bookItem, cell in
                 
                 let cell = cell as! NewBookTableViewCell
-                cell.configureCell(by: viewModel)
+                cell.configureCell(by: bookItem)
             }
             .disposed(by: disposeBag)
         
@@ -74,7 +80,6 @@ extension MVVM_ShowNewBooksViewController {
     @objc /// Table view refresh
     func handleRefreshControl() {
         self.viewModel.reload(true)
-        
         self.tableView.refreshControl?.endRefreshing()
     }
 }

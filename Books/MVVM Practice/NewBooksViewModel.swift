@@ -1,12 +1,44 @@
 import Foundation
 import RxCocoa
+import RxSwift
+
+protocol ViewModelType {
+    associatedtype Input
+    associatedtype Output
+    
+    func transform(req: Input) -> Output
+}
+
+// 공통 기능이 있으면 여기에 정의
+//extension ViewModelType {
+//
+//}
 
 // 1.Model에게 요청
 // 2.Model에게서 받아온 data를 view model에 맞게 가공
 // 3.최종적으로 view model 데이터 뽑기.
-class NewBooksViewModel {
-    // MARK: - Property
+class NewBooksViewModel: ViewModelType {
     
+    var disposeBag = DisposeBag()
+    
+    struct Input {
+        let requestTrigger: PublishRelay<Void>
+    }
+    
+    struct Output {
+        let booksRelay: BehaviorRelay<[BookItem]>
+    }
+    
+    func transform(req: Input) -> Output {
+        req.requestTrigger
+            .bind(onNext: { [weak self] _ in
+                self?.reload(true)
+            })
+            .disposed(by: disposeBag)
+        return NewBooksViewModel.Output(booksRelay: self.books)
+    }
+
+    // MARK: - Property
     /// NetworkService
     let service = Service()
     
