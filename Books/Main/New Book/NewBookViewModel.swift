@@ -89,18 +89,17 @@ extension NewBookViewModel {
                 self.reload(false)
             case .reloadData:
                 self.reload(true)
-            case .goDetailPage:
-                self.goDetailPage()
+            case .goDetailPage(let index):
+                self.goDetailPage(index: index)
         }
     }
     
-    func goDetailPage() {
+    func goDetailPage(index: IndexPath) {
+        print("~~~> \(#function), indexPath: \(index.row)")
         let showDetailBookViewController = ShowDetailBookViewController()
-        
-//        if let isbn13 = self.booksRelay.value[indexPath.row].isbn13 {
-        if let isbn13 = Output().booksRelay.value[IndexPath().row].isbn13 {
-            showDetailBookViewController.isbn13 = isbn13
-//                    self.present(showDetailBookViewController, animated: true)
-        }
+//        if let isbn13 = self.books.value[index.row].isbn13 {
+//            showDetailBookViewController.isbn13 = isbn13
+//            self.present(showDetailBookViewController, animated: true)
+//        }
     }
 }

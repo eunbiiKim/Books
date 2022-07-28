@@ -50,9 +50,8 @@ class NewBookView: UIView {
 extension NewBookView {
     // MARK: Dependency Injection
     /// NewBookViewModel -> NewBookView DI
-    func setupDI(viewModel: BehaviorRelay<[BookItem]>) {
-        viewModel.bind(to: self.booksRelay)
-            .disposed(by: disposeBag)
+    func setupDI(relay: BehaviorRelay<[BookItem]>) {
+        relay.bind(to: self.booksRelay).disposed(by: disposeBag)
     }
     
     /// NewBookView -> NewBookViewModel DI
@@ -60,30 +59,31 @@ extension NewBookView {
         self.viewActionTrigger.bind(to: relay).disposed(by: disposeBag)
     }
     
-    
+    @objc /// Table view refresh
+    func handleRefreshControl() {
+        self.viewActionTrigger.accept(.reloadData)
+        
+        self.tableView.refreshControl?.endRefreshing()
+    }
+}
+
+// MARK: Setup View
+extension NewBookView {
     fileprivate func setupTableView() {
         booksRelay
-            .observe(on: MainScheduler.instance)
-            .bind(to: tableView.rx.items(cellIdentifier: "\(NewBookTableViewCell.self)")) { row, bookItem, cell in
-                
-                let cell = cell as! NewBookTableViewCell
-                cell.configureCell(by: bookItem)
-            }
-            .disposed(by: disposeBag)
+            .bind(to: tableView.rx.items(cellIdentifier: "\(NewBookTableViewCell.self)"))
+        { row, bookItem, cell in
+            let cell = cell as! NewBookTableViewCell
+            cell.configureCell(by: bookItem)
+        }.disposed(by: disposeBag)
         
         tableView.rx.itemSelected
             .asDriver(onErrorJustReturn: IndexPath())
-            .drive(onNext: { indexPath in
-                let showDetailBookViewController = ShowDetailBookViewController()
-                
-                if let isbn13 = self.booksRelay.value[indexPath.row].isbn13 {
-                    showDetailBookViewController.isbn13 = isbn13
-//                    self.present(showDetailBookViewController, animated: true)
-                }
+            .drive(onNext: { [weak self] indexPath in
+                self?.viewActionTrigger.accept(.goDetailPage(indexPath))
             }).disposed(by: disposeBag)
         
         tableView.rx.didScroll
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 guard let tabBarController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? TabBarController else { return }
                 
@@ -98,16 +98,6 @@ extension NewBookView {
             }).disposed(by: disposeBag)
     }
     
-    @objc /// Table view refresh
-    func handleRefreshControl() {
-        self.viewActionTrigger.accept(.reloadData)
-        
-        self.tableView.refreshControl?.endRefreshing()
-    }
-}
-
-// MARK: Setup View
-extension NewBookView {
     fileprivate func setupView() {
         self.addSubview(self.tableView)
         

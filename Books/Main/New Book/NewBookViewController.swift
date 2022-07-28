@@ -39,7 +39,7 @@ extension NewBookViewController {
     func bind() {
         let output = self.viewModel.transform(req: NewBookViewModel.Input.init(requestTrigger: self.requestTrigger, viewActionTrigger: self.viewActionTrigger))
         
-        self.mainView.setupDI(viewModel: output.booksRelay)
+        self.mainView.setupDI(relay: output.booksRelay)
         
         self.mainView.setupDI(relay: self.viewActionTrigger)
     }
