@@ -2,7 +2,10 @@ import UIKit
 
 import SnapKit
 
-class SearchBookView: UIView {
+import RxSwift
+import RxCocoa
+
+class SearchBookContentView: UIView {
     // MARK: - stored properties
     lazy var imageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -64,7 +67,7 @@ class SearchBookView: UIView {
 }
 
 // MARK: - set up view methods
-extension SearchBookView {
+extension SearchBookContentView {
     func setupView() {
         self.backgroundColor = .white
         

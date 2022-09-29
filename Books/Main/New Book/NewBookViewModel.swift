@@ -17,10 +17,10 @@ class NewBookViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
     // MARK: - Property
-    /// Model
+    ///NewBookViewModel의 Model
     var booksModel: [BookItem] = []
     
-    /// viewModel
+    ///NewBookViewModel의 ViewModel
     var books: BehaviorRelay<[BookItem]> = BehaviorRelay<[BookItem]>(value: [])
     
     struct Input {
@@ -96,7 +96,10 @@ extension NewBookViewModel {
     
     func goDetailPage(index: IndexPath) {
         print("~~~> \(#function), indexPath: \(index.row)")
-        let showDetailBookViewController = ShowDetailBookViewController()
+        print("~~~> book item info: \(self.books.value[index.row])")
+        
+        // TODO: - RxFlow로 고치기.
+//        let showDetailBookViewController = ShowDetailBookViewController()
 //        if let isbn13 = self.books.value[index.row].isbn13 {
 //            showDetailBookViewController.isbn13 = isbn13
 //            self.present(showDetailBookViewController, animated: true)

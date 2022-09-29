@@ -8,7 +8,7 @@ class SearchBookTableViewCell: UITableViewCell {
     // MARK: - stored properties
     static let identifier = "SearchBookTableViewCell"
     
-    lazy var searchBookView = SearchBookView()
+    lazy var searchBookView = SearchBookContentView()
     
     // MARK: - initialize methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

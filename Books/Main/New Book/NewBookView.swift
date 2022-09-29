@@ -49,12 +49,12 @@ class NewBookView: UIView {
 
 extension NewBookView {
     // MARK: Dependency Injection
-    /// NewBookViewModel -> NewBookView DI
+    /// NewBookViewModel -> NewBookView
     func setupDI(relay: BehaviorRelay<[BookItem]>) {
         relay.bind(to: self.booksRelay).disposed(by: disposeBag)
     }
     
-    /// NewBookView -> NewBookViewModel DI
+    /// NewBookView -> NewBookViewModel
     func setupDI(relay: PublishRelay<NewBookViewAction>) {
         self.viewActionTrigger.bind(to: relay).disposed(by: disposeBag)
     }

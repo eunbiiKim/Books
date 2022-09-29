@@ -36,7 +36,7 @@ class NewBookViewController: UIViewController {
 
 //MARK: - Method
 extension NewBookViewController {
-    func bind() {
+    private func bind() {
         let output = self.viewModel.transform(req: NewBookViewModel.Input.init(requestTrigger: self.requestTrigger, viewActionTrigger: self.viewActionTrigger))
         
         self.mainView.setupDI(relay: output.booksRelay)
@@ -47,7 +47,7 @@ extension NewBookViewController {
 
 //MARK: - Setup view
 extension NewBookViewController {
-    func setupViewLayout() {
+    private func setupViewLayout() {
         self.view.addSubview(self.mainView)
         
         self.mainView.snp.makeConstraints {
@@ -55,7 +55,7 @@ extension NewBookViewController {
         }
     }
     
-    func setupView() {
+    private func setupView() {
         self.view.backgroundColor = .white
         
         self.navigationItem.title = "New Books"

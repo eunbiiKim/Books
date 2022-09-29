@@ -100,7 +100,7 @@ class NetworkService {
         task.resume()
     }
     
-    /// 데이터 로드 함수 -> New
+    // MARK: 데이터 로드 함수 -> New
     func loadData(path: String, query1: String?, query2: String?) -> Observable<BookModel> {
 
         return Observable.create { emitter in
@@ -127,13 +127,14 @@ class NetworkService {
                 }
             }
             task.resume()
+            
             return Disposables.create {
                 task.cancel()
             }
         }
     }
     
-    /// 데이터 로드 함수 -> Search / Detail
+    // MARK: 데이터 로드 함수 ->  Search / Detail
     func loadData(path: String, query1: String?, query2: String?, completionHandler: @escaping (BookModel) -> Void) {
         
         guard let requestURL = self.configuraURL(path, query1, query2) else { return }
