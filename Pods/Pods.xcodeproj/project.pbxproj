@@ -452,7 +452,7 @@
 		28AB0E4BF6D8ACA507F21121967B7030 /* Delay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Delay.swift; path = RxSwift/Observables/Delay.swift; sourceTree = "<group>"; };
 		28CA815C3395C0EF6D4FAD820CFB5E19 /* BinaryDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BinaryDisposable.swift; path = RxSwift/Disposables/BinaryDisposable.swift; sourceTree = "<group>"; };
 		2A27A25EC608085C4C23B8BAA75BFD41 /* Switch.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Switch.swift; path = RxSwift/Observables/Switch.swift; sourceTree = "<group>"; };
-		2A3F6AC8B835EDD4C33F9D0CED4C1DE5 /* Pods-Books */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Books"; path = Pods_Books.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A3F6AC8B835EDD4C33F9D0CED4C1DE5 /* Pods_Books.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Books.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ACCF9EE460F6C21DC5A33CF7C164F31 /* UITextView+Rx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UITextView+Rx.swift"; path = "RxCocoa/iOS/UITextView+Rx.swift"; sourceTree = "<group>"; };
 		2AFBADC1CF010184BE8496901A05D11D /* SubscribeOn.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscribeOn.swift; path = RxSwift/Observables/SubscribeOn.swift; sourceTree = "<group>"; };
 		2B13B9E1463687FA72F9839604D2DFD4 /* MainScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MainScheduler.swift; path = RxSwift/Schedulers/MainScheduler.swift; sourceTree = "<group>"; };
@@ -898,7 +898,7 @@
 		A2D1E86E269ED6D776C2D78C6A4053C6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2A3F6AC8B835EDD4C33F9D0CED4C1DE5 /* Pods-Books */,
+				2A3F6AC8B835EDD4C33F9D0CED4C1DE5 /* Pods_Books.framework */,
 				F339F4A8058E4E6E2C6AC5DBE19FF47B /* Pods-Books-BooksUITests */,
 				FD00611848E4CFB620D9E34700E53CCE /* Pods-BooksTests */,
 				BC432FD48A5932251F1CAFBC4BF74894 /* RxCocoa.framework */,
@@ -1485,7 +1485,7 @@
 			);
 			name = "Pods-Books";
 			productName = Pods_Books;
-			productReference = 2A3F6AC8B835EDD4C33F9D0CED4C1DE5 /* Pods-Books */;
+			productReference = 2A3F6AC8B835EDD4C33F9D0CED4C1DE5 /* Pods_Books.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
